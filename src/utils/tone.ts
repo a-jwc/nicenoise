@@ -11,11 +11,11 @@ export async function getAudioBuffer(file: File) {
 
 export async function createTone(file: File) {
 	const audioBuffer = await getAudioBuffer(file);
-  console.log(audioBuffer)
+	console.log(audioBuffer);
 	if (audioBuffer !== undefined) {
 		const player = new Tone.Player(audioBuffer, () => {
-      console.log("loaded")
-    }).toDestination();
-    return player
+			console.log("loaded");
+		});
+		return player;
 	}
 }

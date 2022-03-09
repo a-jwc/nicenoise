@@ -1,11 +1,17 @@
 import { useState } from "react";
 import Container from "../components/Container";
+import Player from "../components/Player";
 import { validFileType, returnFileSize } from "../utils/fileUpload";
 import { createTone } from "../utils/tone";
+import * as Tone from "tone";
 
 export const SoundBetter = () => {
 	const [file, setFile] = useState<File>();
 	const [fileSize, setFileSize] = useState<string | undefined>("");
+	const [state, setState] = useState({
+		isSubmitted: false,
+		player: new Tone.Player(),
+	});
 
 	const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
 		if (event.target.files !== null) {
@@ -25,7 +31,10 @@ export const SoundBetter = () => {
 			throw Error("file is undefined");
 		}
 		const tone = await createTone(file);
-		tone !== undefined ? tone.start() : console.log("tone undefined");
+		tone !== undefined
+			? setState({ player: tone, isSubmitted: true })
+			: console.log("tone undefined");
+    console.log(tone)
 	};
 
 	return (
@@ -47,7 +56,6 @@ export const SoundBetter = () => {
 							type="submit"
 							className="place-self-center w-16 h-8 bg-red-500 m-4 rounded-lg"
 						/>
-					</form>
 					<div className="flex flex-row gap-4 mx-auto">
 						<div>
 							{file?.name.length !== undefined
@@ -56,6 +64,8 @@ export const SoundBetter = () => {
 						</div>
 						<div>{fileSize !== "" ? `File size: ${fileSize}` : ""}</div>
 					</div>
+					</form>
+					<div>{state.isSubmitted && <Player player={state.player} />}</div>
 				</div>
 			</div>
 		</Container>
