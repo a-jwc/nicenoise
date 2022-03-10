@@ -43,18 +43,18 @@ export const SoundBetter = () => {
 				<h1 className="text-center text-2xl font-bold p-4">Sound Better</h1>
 				<div className="h-screen p-4 mx-auto">
 					<form className="flex flex-col" onSubmit={handleSubmit}>
-						<label className="flex flex-col place-self-center border-2 border-neutral-400 p-4 text-center">
+						<label className="flex flex-col place-self-center border-2 border-neutral-400 p-4 text-center hover:cursor-pointer">
 							Upload
 							<input
 								type="file"
 								accept="audio/mp3, audio/wav"
-								className="mt-2 opacity-0"
+								className="mt-2 opacity-0 hover:cursor-pointer"
 								onChange={(e) => handleFileUpload(e)}
 							/>
 						</label>
 						<input
 							type="submit"
-							className="place-self-center w-16 h-8 bg-red-500 m-4 rounded-lg"
+							className="place-self-center w-16 h-8 bg-red-500 m-4 text-white hover:cursor-pointer"
 						/>
 					<div className="flex flex-row gap-4 mx-auto">
 						<div>
