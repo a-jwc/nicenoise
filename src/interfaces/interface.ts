@@ -18,6 +18,19 @@ export interface ToggleButtonProp {
 	styles?: string;
 	state?: any;
 	stateFn?: Function;
+	connectFn?: Function;
+	disconnectFn?: Function;
+}
+
+export interface EffectToggleButtonProp {
+	player: Tone.Player;
+	name: string;
+	styles?: string;
+	isState: boolean;
+  stateEffect: any;
+	stateFn?: Function;
+	connectFn: Function;
+	disconnectFn: Function;
 }
 
 export interface SliderProp {
