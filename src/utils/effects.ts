@@ -15,30 +15,16 @@ export function initEffects(player: Tone.Player) {
 	};
 }
 
-export function connectBitcrusher(
-  player: Tone.Player,
-  crusher: Tone.BitCrusher
-) {
-  player.connect(crusher);
+export function connectEffect(player: Tone.Player, effect: any) {
+  player.chain(effect, Tone.Destination)
 }
 
-export function disconnectBitcrusher(
-  player: Tone.Player,
-  crusher: Tone.BitCrusher
-) {
-  player.disconnect(crusher);
+export function disconnectEffect(player: Tone.Player, effect: any) {
+  player.disconnect(effect)
 }
 
-export function toggleBitcrusher(
-  player: Tone.Player,
-  crusher: Tone.BitCrusher
-) {
-  crusher.wet.value === 0 ? (crusher.wet.value = 1) : (crusher.wet.value = 0);
-}
-
-export function distortion(player: Tone.Player, amount: number) {
-	player.connect(crossFade.a).toDestination();
-	crossFade.fade.value = amount;
+export function toggleEffect(player: Tone.Player, effect: any) {
+  effect.wet.value === 0 ? (effect.wet.value = 1) : (effect.wet.value = 0);
 }
 
 export function filter(
