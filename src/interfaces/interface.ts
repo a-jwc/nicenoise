@@ -24,13 +24,25 @@ export interface ToggleButtonProp {
 
 export interface EffectToggleButtonProp {
 	player: Tone.Player;
-	name: string;
+	name?: string;
 	styles?: string;
 	isState: boolean;
   stateEffect: any;
 	stateFn?: Function;
 	connectFn: Function;
 	disconnectFn: Function;
+}
+
+export interface ChannelEffectToggleButtonProp {
+	effectChannel: any;
+	name: string;
+	styles?: string;
+	isState: boolean;
+  stateEffect?: any;
+	stateFn?: Function;
+	connectFn: Function;
+	muteFn: Function;
+  channelName: string;
 }
 
 export interface SliderProp {
@@ -42,11 +54,32 @@ export interface SliderProp {
 	max?: string;
 	defaultValue?: string;
 	step?: string;
+  styles?: string;
 }
 
 export interface EffectSliderProp {
 	player: Tone.Player;
+	name?: string;
+	fn: Function;
+	value?: number;
+	min?: string;
+	max?: string;
+	defaultValue?: string;
+	step?: string;
+  styles?: string;
+  effect: any;
+  setEffect: Function;
+  stateEffect: any;
+}
+
+export interface PitchSliderProp {
+	shifter: Tone.PitchShift;
 	name: string;
 	fn: Function;
-	value: number;
+	value?: number;
+	min?: string;
+	max?: string;
+	defaultValue?: string;
+	step?: string;
+  styles?: string;
 }

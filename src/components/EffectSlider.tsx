@@ -1,4 +1,4 @@
-import { SliderProp } from "../interfaces/interface";
+import { EffectSliderProp } from "../interfaces/interface";
 
 export function EffectSlider({
 	player,
@@ -8,11 +8,14 @@ export function EffectSlider({
 	max,
 	defaultValue,
 	step,
-}: SliderProp) {
+	styles,
+	effect,
+	setEffect,
+	stateEffect,
+}: EffectSliderProp) {
 	return (
-		<div>
+		<div className="text-center">
 			<label>
-				{name}
 				<input
 					type="range"
 					min={min}
@@ -20,9 +23,10 @@ export function EffectSlider({
 					defaultValue={defaultValue}
 					step={step}
 					onChange={(e) => {
-						fn(player, parseFloat(e.target.value));
+						fn(parseFloat(e.target.value), effect);
 					}}
 				/>
+				{name}
 			</label>
 		</div>
 	);
