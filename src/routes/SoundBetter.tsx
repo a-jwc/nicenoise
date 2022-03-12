@@ -20,21 +20,20 @@ export const SoundBetter = () => {
 				setFile(file);
 				setFileSize(returnFileSize(file.size));
 			} else {
+        throw Error("invalid file type")
 			}
 		}
 	};
 
 	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		console.log(file);
 		if (file === undefined) {
 			throw Error("file is undefined");
 		}
 		const tone = await createTone(file);
 		tone !== undefined
 			? setState({ player: tone, isSubmitted: true })
-			: console.log("tone undefined");
-    console.log(tone)
+			: console.error("tone undefined");
 	};
 
 	return (
