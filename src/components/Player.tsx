@@ -3,7 +3,6 @@ import * as Tone from "tone";
 import { PlayerContainer } from "../interfaces/interface";
 import {
 	initEffects,
-	filter,
 	updatePitchShift,
 	setDistortionAmount,
 	toggleEffect,
@@ -15,6 +14,11 @@ import {
 	setChorusDelay,
 	setChorusFeedback,
 	setReverbPreDelay,
+	connectFilter,
+	disconnectFilter,
+	setFilterFrequency,
+	setFilterType,
+  setFilterRolloff,
 } from "../utils/effects";
 import { loop, play, stop, volume } from "../utils/player";
 import { EffectToggleButton } from "./EffectToggleButton";
@@ -22,6 +26,10 @@ import PlayerButton from "./PlayerButton";
 import PlayerToggleButton from "./PlayerToggleButton";
 import { VolumeSlider } from "./VolumeSlider";
 import { PitchSlider } from "./PitchSlider";
+import { ConnectToggleButton } from "./ConnectToggleButton";
+import { NumberInput } from "./NumberInput";
+import { BiquadFilters, FilterRollOffs } from "../utils/options";
+import { FilterRollOff } from "tone";
 
 export default function Player({ player }: PlayerContainer) {
 	const [effects, setEffects] = useState({
@@ -29,6 +37,7 @@ export default function Player({ player }: PlayerContainer) {
 		distortion: new Tone.Distortion(),
 		chorus: new Tone.Chorus(),
 		reverb: new Tone.Reverb(),
+		filter: new Tone.Filter(),
 	});
 	const [isLoop, setIsLoop] = useState(true);
 
@@ -38,6 +47,7 @@ export default function Player({ player }: PlayerContainer) {
 			bitcrusher,
 			chorus,
 			reverb,
+			filter,
 			// pitchShift,
 		} = initEffects(player);
 
@@ -49,12 +59,22 @@ export default function Player({ player }: PlayerContainer) {
 			distortion: distortion,
 			chorus: chorus,
 			reverb: reverb,
+			filter: filter,
 		});
 
 		player.chain(distortion, bitcrusher, chorus, reverb, Tone.Destination);
+		// player.connect(filter);
 
 		// setPitchShifter(pitchShift);
 	}, [player]);
+
+	const mapBiquadFilterOption = BiquadFilters.map((filter) => (
+		<option value={filter}>{filter}</option>
+	));
+
+	const mapFilterRolloffOption = FilterRollOffs.map((rolloff) => (
+		<option value={rolloff}>{rolloff}</option>
+	));
 
 	return (
 		<div className="border-4 p-4 m-4">
@@ -99,24 +119,15 @@ export default function Player({ player }: PlayerContainer) {
 								effect={effects.distortion}
 								toggleFn={toggleEffect}
 							/>
-							<label>
-								Amount
-								<input
-									type={"number"}
-									min="0"
-									max="1.0"
-									step="0.1"
-									defaultValue={"0"}
-									onChange={(e) => {
-										console.log(e.target.value);
-										setDistortionAmount(
-											effects.distortion,
-											parseFloat(e.target.value)
-										);
-									}}
-									className="text-right"
-								/>
-							</label>
+							<NumberInput
+								name="Amount"
+								min="0"
+								max="1.0"
+								step="0.1"
+								defaultValue="0"
+								setEffect={setDistortionAmount}
+								effect={effects.distortion}
+							/>
 							<label>
 								Oversample
 								<select
@@ -140,24 +151,15 @@ export default function Player({ player }: PlayerContainer) {
 								effect={effects.bitcrusher}
 								toggleFn={toggleEffect}
 							/>
-							<label>
-								Bits
-								<input
-									type={"number"}
-									min="1"
-									max="16"
-									step="1"
-									defaultValue={"1"}
-									onChange={(e) => {
-										console.log(e.target.value);
-										setBitcrusherAmount(
-											effects.bitcrusher,
-											parseInt(e.target.value)
-										);
-									}}
-									className="text-right"
-								/>
-							</label>
+							<NumberInput
+								name="Bits"
+								min="1"
+								max="16"
+								step="1"
+								defaultValue="1"
+								setEffect={setBitcrusherAmount}
+								effect={effects.bitcrusher}
+							/>
 						</div>
 						<div className="flex gap-2 flex-wrap place-content-center border-4 p-4">
 							<h1>Chorus</h1>
@@ -167,75 +169,42 @@ export default function Player({ player }: PlayerContainer) {
 								toggleFn={toggleEffect}
 							/>
 							<div className="flex gap-4">
-								<label>
-									Depth
-									<input
-										type={"number"}
-										min="0"
-										max="1"
-										step="0.1"
-										defaultValue={"0"}
-										onChange={(e) => {
-											console.log(e.target.value);
-											setChorusDepth(
-												effects.chorus,
-												parseFloat(e.target.value)
-											);
-										}}
-										className="text-right"
-									/>
-								</label>
-								<label>
-									Frequency
-									<input
-										type={"number"}
-										min="1"
-										max="1000"
-										step="1"
-										defaultValue={"1"}
-										onChange={(e) => {
-											console.log(e.target.value);
-											setChorusFrequency(
-												effects.chorus,
-												parseInt(e.target.value)
-											);
-										}}
-										className="text-right"
-									/>
-								</label>
-								<label>
-									Delay(ms)
-									<input
-										type={"number"}
-										min="0"
-										max="100000"
-										step="0"
-										defaultValue={"0"}
-										onChange={(e) => {
-											console.log(e.target.value);
-											setChorusDelay(effects.chorus, parseInt(e.target.value));
-										}}
-										className="text-right"
-									/>
-								</label>
-								<label>
-									Feedback
-									<input
-										type={"number"}
-										min="0"
-										max="1"
-										step="0.1"
-										defaultValue={"0"}
-										onChange={(e) => {
-											console.log(e.target.value);
-											setChorusFeedback(
-												effects.chorus,
-												parseFloat(e.target.value)
-											);
-										}}
-										className="text-right"
-									/>
-								</label>
+								<NumberInput
+									name="Depth"
+									min="0"
+									max="1"
+									step="0.1"
+									defaultValue="0"
+									setEffect={setChorusDepth}
+									effect={effects.chorus}
+								/>
+								<NumberInput
+									name="Frequency(Hz)"
+									min="1"
+									max="20000000"
+									step="1"
+									defaultValue="1"
+									setEffect={setChorusFrequency}
+									effect={effects.chorus}
+								/>
+								<NumberInput
+									name="Delay(ms)"
+									min="0"
+									max="100000"
+									step="1"
+									defaultValue="0"
+									setEffect={setChorusDelay}
+									effect={effects.chorus}
+								/>
+								<NumberInput
+									name="Feedback"
+									min="0"
+									max="1"
+									step="0.1"
+									defaultValue="0"
+									setEffect={setChorusFeedback}
+									effect={effects.chorus}
+								/>
 							</div>
 						</div>
 						<div className="flex gap-6 flex-wrap place-content-center border-4 p-4">
@@ -245,35 +214,75 @@ export default function Player({ player }: PlayerContainer) {
 								effect={effects.reverb}
 								toggleFn={toggleEffect}
 							/>
+							<NumberInput
+								name="Decay Time(s)"
+								min="1"
+								max="60"
+								step="1"
+								defaultValue="1"
+								setEffect={setReverbDecay}
+								effect={effects.reverb}
+							/>
+							<NumberInput
+								name="Delay(s)"
+								min="0"
+								max="100000"
+								step="1"
+								defaultValue="0"
+								setEffect={setReverbPreDelay}
+								effect={effects.reverb}
+							/>
+						</div>
+						<div className="flex gap-6 flex-wrap place-content-center border-4 p-4">
+							<h1>Filter</h1>
+							<ConnectToggleButton
+								player={player}
+								name="Connect"
+								effect={effects.filter}
+								connectFn={connectFilter}
+								disconnectFn={disconnectFilter}
+							/>
 							<label className="">
-								Decay Time(s)
+								Frequency(Hz)
 								<input
-									type={"number"}
-									min="1"
-									max="60"
+									type={"range"}
+									min="20"
+									max="20000000"
 									step="1"
-									defaultValue={"1"}
+									defaultValue={"5000"}
 									onChange={(e) => {
-										console.log(e.target.value);
-										setReverbDecay(effects.reverb, parseInt(e.target.value));
+										setFilterFrequency(
+											effects.filter,
+											parseInt(e.target.value)
+										);
 									}}
-									className="text-right"
 								/>
 							</label>
-							<label className="">
-								Delay (s)
-								<input
-									type={"number"}
-									min="0"
-									max="100000"
-									step="1"
-									defaultValue={"0"}
+							<label>
+								Filter Type
+								<select
 									onChange={(e) => {
-										console.log(e.target.value);
-										setReverbPreDelay(effects.reverb, parseInt(e.target.value));
+										setFilterType(
+											effects.filter,
+											e.target.value as BiquadFilterType
+										);
 									}}
-									className="text-right"
-								/>
+								>
+									{mapBiquadFilterOption}
+								</select>
+							</label>
+              <label>
+								Rolloff db
+								<select
+									onChange={(e) => {
+										setFilterRolloff(
+											effects.filter,
+											parseInt(e.target.value) as FilterRollOff
+										);
+									}}
+								>
+									{mapFilterRolloffOption}
+								</select>
 							</label>
 						</div>
 					</div>

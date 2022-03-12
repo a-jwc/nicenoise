@@ -1,4 +1,3 @@
-import { channel } from "diagnostics_channel";
 import * as Tone from "tone";
 import { FilterRollOff } from "tone";
 
@@ -7,6 +6,7 @@ export function initEffects(player: Tone.Player) {
 	const bitcrusher = new Tone.BitCrusher(6).toDestination();
 	const chorus = new Tone.Chorus(4, 2.5, 0.5).toDestination();
 	const reverb = new Tone.Reverb().toDestination();
+	const filter = new Tone.Filter(5000, "lowpass", -96).toDestination();
 
 	const reverbChannel = new Tone.Channel({ volume: -60 }).connect(reverb);
 	reverbChannel.receive("reverb");
@@ -14,16 +14,12 @@ export function initEffects(player: Tone.Player) {
 	// const pitchShift = new Tone.PitchShift().toDestination();
 
 	return {
-		// distortionChannel,
-		// bitcrusherChannel,
-		// chorusChannel,
 		reverbChannel,
 		distortion,
 		bitcrusher,
 		chorus,
 		reverb,
-		// // jcReverb,
-		// pitchShift,
+		filter,
 	};
 }
 
@@ -94,10 +90,7 @@ export function setChorusFrequency(
 	chorus.set({ frequency: amount });
 }
 
-export function setChorusFeedback(
-	chorus: Tone.Chorus,
-	amount: number
-) {
+export function setChorusFeedback(chorus: Tone.Chorus, amount: number) {
 	chorus.set({ feedback: amount });
 }
 
@@ -105,13 +98,22 @@ export function setChorusDelay(chorus: Tone.Chorus, amount: number) {
 	chorus.delayTime = amount;
 }
 
-export function filter(
-	player: Tone.Player,
-	freq: Tone.Unit.Frequency,
-	type?: BiquadFilterType,
-	rolloff?: FilterRollOff
-) {
-	const filter = new Tone.Filter(10000, "highpass");
-	console.log(filter);
-	player.chain(filter, Tone.Destination);
+export function connectFilter(player: Tone.Player, filter: Tone.Filter) {
+	player.connect(filter);
+}
+
+export function disconnectFilter(player: Tone.Player, filter: Tone.Filter) {
+	player.disconnect(filter);
+}
+
+export function setFilterFrequency(filter: Tone.Filter, frequency: number) {
+	filter.set({ frequency: frequency });
+}
+
+export function setFilterRolloff(filter: Tone.Filter, rolloff: FilterRollOff) {
+	filter.set({ rolloff: rolloff });
+}
+
+export function setFilterType(filter: Tone.Filter, type: BiquadFilterType) {
+	filter.set({ type });
 }
