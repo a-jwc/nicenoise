@@ -47,9 +47,10 @@ export const SoundBetter = () => {
 							Upload
 							<input
 								type="file"
-								accept="audio/mp3, audio/wav"
+								accept="audio/*"
 								className="mt-2 opacity-0 hover:cursor-pointer"
 								onChange={(e) => handleFileUpload(e)}
+                required
 							/>
 						</label>
 						<input
