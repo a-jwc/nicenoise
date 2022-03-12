@@ -22,11 +22,22 @@ export interface ToggleButtonProp {
 	disconnectFn?: Function;
 }
 
+export interface ConnectToggleButtonProp {
+	player: Tone.Player;
+	name: string;
+	fn?: Function;
+	styles?: string;
+	effect: any;
+	stateFn?: Function;
+	connectFn: Function;
+	disconnectFn: Function;
+}
+
 export interface EffectToggleButtonProp {
 	name?: string;
 	styles?: string;
-  effect: any;
-  toggleFn: Function;
+	effect: any;
+	toggleFn: Function;
 }
 
 export interface ChannelEffectToggleButtonProp {
@@ -34,11 +45,11 @@ export interface ChannelEffectToggleButtonProp {
 	name: string;
 	styles?: string;
 	isState: boolean;
-  stateEffect?: any;
+	stateEffect?: any;
 	stateFn?: Function;
 	connectFn: Function;
 	muteFn: Function;
-  channelName: string;
+	channelName: string;
 }
 
 export interface SliderProp {
@@ -50,7 +61,7 @@ export interface SliderProp {
 	max?: string;
 	defaultValue?: string;
 	step?: string;
-  styles?: string;
+	styles?: string;
 }
 
 export interface EffectSliderProp {
@@ -62,10 +73,10 @@ export interface EffectSliderProp {
 	max?: string;
 	defaultValue?: string;
 	step?: string;
-  styles?: string;
-  effect: any;
-  setEffect: Function;
-  stateEffect: any;
+	styles?: string;
+	effect: any;
+	setEffect: Function;
+	stateEffect: any;
 }
 
 export interface PitchSliderProp {
@@ -77,5 +88,16 @@ export interface PitchSliderProp {
 	max?: string;
 	defaultValue?: string;
 	step?: string;
-  styles?: string;
+	styles?: string;
+}
+
+export interface NumberInputProp {
+	name: string;
+	min: string;
+	max: string;
+	step: string;
+	defaultValue: string;
+	setEffect: Function;
+	effect: any;
+	styles?: string;
 }
