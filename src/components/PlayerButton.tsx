@@ -6,7 +6,7 @@ export default function PlayerButton({ player, name, fn, styles }: PlayerButtonP
 			<button
 				type="button"
 				onClick={() => fn(player)}
-				className={`border-2 border-black p-1 hover:bg-red-300 ${styles}`}
+				className={`border-2 border-black p-1 hover:bg-red-300 transition-colors ${styles}`}
 			>
 				{name}
 			</button>
