@@ -1,39 +1,26 @@
-import { ChannelEffectToggleButtonProp } from "../interfaces/interface";
+import { useState } from "react";
+import { EffectToggleButtonProp } from "../interfaces/interface";
 
 export function EffectToggleButton({
-	effectChannel,
 	name,
 	styles,
-	isState,
-	stateEffect,
-	stateFn,
-	connectFn,
-	muteFn,
-	channelName,
-}: ChannelEffectToggleButtonProp) {
+	effect,
+  toggleFn
+}: EffectToggleButtonProp) {
+  const [mute, setMute] = useState(true);
 	return (
 		<div>
 			<button
 				type="button"
 				onClick={() => {
-					// if (!isState) {
-					// 	console.log(`connecting ${name}`);
-					// 	connectFn(effectChannel, channelName);
-					// } else {
-					// 	console.log(`disconnecting ${name}`);
-					// 	muteFn(effectChannel, channelName, isState);
-					// }
-					muteFn(effectChannel, isState);
-
-					if (stateFn !== undefined) {
-						stateFn(!isState);
-					}
+          toggleFn(effect);
+          setMute(!mute);
 				}}
 				className={`border-2 border-black p-1 hover:bg-red-300 w-24 ${styles} ${
-					isState ? "bg-red-300" : ""
+					mute ? "bg-red-300" : "bg-blue-300"
 				}`}
 			>
-				{isState ? name: "Unmute"}
+				{mute ? "Mute" : "Unmute"}
 			</button>
 		</div>
 	);

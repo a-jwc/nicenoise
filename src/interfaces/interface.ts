@@ -23,14 +23,10 @@ export interface ToggleButtonProp {
 }
 
 export interface EffectToggleButtonProp {
-	player: Tone.Player;
 	name?: string;
 	styles?: string;
-	isState: boolean;
-  stateEffect: any;
-	stateFn?: Function;
-	connectFn: Function;
-	disconnectFn: Function;
+  effect: any;
+  toggleFn: Function;
 }
 
 export interface ChannelEffectToggleButtonProp {

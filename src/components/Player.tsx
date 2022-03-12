@@ -3,14 +3,20 @@ import * as Tone from "tone";
 import { PlayerContainer } from "../interfaces/interface";
 import {
 	initEffects,
-	connectChannelEffect,
-	muteChannelEffect,
 	filter,
-	setChannelVolume,
 	updatePitchShift,
+	setDistortionAmount,
+	toggleEffect,
+	setBitcrusherAmount,
+	setReverbDecay,
+	setChorusDepth,
+	setDistortionOversample,
+	setChorusFrequency,
+	setChorusDelay,
+	setChorusFeedback,
+	setReverbPreDelay,
 } from "../utils/effects";
 import { loop, play, stop, volume } from "../utils/player";
-import { EffectSlider } from "./EffectSlider";
 import { EffectToggleButton } from "./EffectToggleButton";
 import PlayerButton from "./PlayerButton";
 import PlayerToggleButton from "./PlayerToggleButton";
@@ -19,68 +25,35 @@ import { PitchSlider } from "./PitchSlider";
 
 export default function Player({ player }: PlayerContainer) {
 	const [effects, setEffects] = useState({
-		crusher: new Tone.BitCrusher(),
+		bitcrusher: new Tone.BitCrusher(),
 		distortion: new Tone.Distortion(),
 		chorus: new Tone.Chorus(),
+		reverb: new Tone.Reverb(),
 	});
 	const [isLoop, setIsLoop] = useState(true);
-	const [isDistorted, setIsDistorted] = useState(true);
-	const [isBitcrushed, setIsBitcrushed] = useState(true);
-	const [isChorus, setIsChorus] = useState(true);
-	const [isReverb, setIsReverb] = useState(true);
-
-	const [pitchShifter, setPitchShifter] = useState(new Tone.PitchShift());
-
-	const [distortionChannel, setDistortionChannel] = useState<Tone.Channel>(
-		new Tone.Channel()
-	);
-	const [bitcrusherChannel, setBitcrusherChannel] = useState<Tone.Channel>(
-		new Tone.Channel()
-	);
-	const [chorusChannel, setChorusChannel] = useState<Tone.Channel>(
-		new Tone.Channel()
-	);
-	const [reverbChannel, setReverbChannel] = useState<Tone.Channel>(
-		new Tone.Channel()
-	);
-
-	const [playerChannel, setPlayerChannel] = useState<Tone.Channel>();
 
 	useEffect(() => {
-		const playerChannel = new Tone.Channel().toDestination();
-		player.connect(playerChannel);
 		const {
-			distort,
-			distortionChannel,
-			bitcrusherChannel,
-			chorusChannel,
-			reverbChannel,
+			distortion,
 			bitcrusher,
 			chorus,
-			pitchShift,
+			reverb,
+			// pitchShift,
 		} = initEffects(player);
 
 		// player.connect(pitchShift).toDestination();
 
 		setEffects({
 			...effects,
-			crusher: bitcrusher,
-			distortion: distort,
+			bitcrusher: bitcrusher,
+			distortion: distortion,
 			chorus: chorus,
+			reverb: reverb,
 		});
-    
-		setPitchShifter(pitchShift);
-		setDistortionChannel(distortionChannel);
-		setBitcrusherChannel(bitcrusherChannel);
-		setChorusChannel(chorusChannel);
-		setReverbChannel(reverbChannel);
-		setPlayerChannel(playerChannel);
 
-		playerChannel.send("distortion");
-		playerChannel.send("bitcrusher");
-		playerChannel.send("chorus");
-		playerChannel.send("reverb");
+		player.chain(distortion, bitcrusher, chorus, reverb, Tone.Destination);
 
+		// setPitchShifter(pitchShift);
 	}, [player]);
 
 	return (
@@ -118,102 +91,190 @@ export default function Player({ player }: PlayerContainer) {
 				/> */}
 				<div className="row-start-2 col-start-2">
 					<h2 className="text-center mt-2 mb-4">Effects</h2>
-					<div className="flex gap-20">
-						<div className="flex gap-2 flex-wrap row-start-3 place-content-center border-4 p-4">
+					<div className="flex xl:flex-nowrap flex-wrap gap-8">
+						<div className="flex gap-6 flex-wrap place-content-center border-4 p-4 w-96">
 							<h1>Distortion</h1>
 							<EffectToggleButton
-								effectChannel={distortionChannel}
 								name="Mute"
-								isState={isDistorted}
-								stateFn={setIsDistorted}
-								connectFn={connectChannelEffect}
-								muteFn={muteChannelEffect}
-								channelName={"distortion"}
+								effect={effects.distortion}
+								toggleFn={toggleEffect}
 							/>
-							<EffectSlider
-								player={player}
-								name={"Channel Send"}
-								fn={setChannelVolume}
-								min="-60"
-								max="6"
-								defaultValue="-60"
-								step="0.1"
-								effect={distortionChannel}
-								setEffect={setDistortionChannel}
-								stateEffect={effects}
-							/>
+							<label>
+								Amount
+								<input
+									type={"number"}
+									min="0"
+									max="1.0"
+									step="0.1"
+									defaultValue={"0"}
+									onChange={(e) => {
+										console.log(e.target.value);
+										setDistortionAmount(
+											effects.distortion,
+											parseFloat(e.target.value)
+										);
+									}}
+									className="text-right"
+								/>
+							</label>
+							<label>
+								Oversample
+								<select
+									onChange={(e) => {
+										setDistortionOversample(
+											effects.distortion,
+											e.target.value as OverSampleType
+										);
+									}}
+								>
+									<option value={"none"}>None</option>
+									<option value={"2x"}>2x</option>
+									<option value={"4x"}>4x</option>
+								</select>
+							</label>
 						</div>
-						<div className="flex gap-2 flex-wrap row-start-3 place-content-center">
+						<div className="flex gap-2 flex-wrap place-content-center border-4 p-4">
 							<h1>BitCrusher</h1>
 							<EffectToggleButton
-								effectChannel={bitcrusherChannel}
 								name="Mute"
-								isState={isBitcrushed}
-								stateFn={setIsBitcrushed}
-								connectFn={connectChannelEffect}
-								muteFn={muteChannelEffect}
-								channelName={"bitcrusher"}
+								effect={effects.bitcrusher}
+								toggleFn={toggleEffect}
 							/>
-							<EffectSlider
-								player={player}
-								name={"Channel Send"}
-								fn={setChannelVolume}
-								min="-60"
-								max="6"
-								defaultValue="-60"
-								step="0.1"
-								effect={bitcrusherChannel}
-								setEffect={setBitcrusherChannel}
-								stateEffect={effects}
-							/>
+							<label>
+								Bits
+								<input
+									type={"number"}
+									min="1"
+									max="16"
+									step="1"
+									defaultValue={"1"}
+									onChange={(e) => {
+										console.log(e.target.value);
+										setBitcrusherAmount(
+											effects.bitcrusher,
+											parseInt(e.target.value)
+										);
+									}}
+									className="text-right"
+								/>
+							</label>
 						</div>
-						<div className="flex gap-2 flex-wrap row-start-3 place-content-center">
+						<div className="flex gap-2 flex-wrap place-content-center border-4 p-4">
 							<h1>Chorus</h1>
 							<EffectToggleButton
-								effectChannel={chorusChannel}
 								name="Mute"
-								isState={isChorus}
-								stateFn={setIsChorus}
-								connectFn={connectChannelEffect}
-								muteFn={muteChannelEffect}
-								channelName={"chorus"}
+								effect={effects.chorus}
+								toggleFn={toggleEffect}
 							/>
-							<EffectSlider
-								player={player}
-								name={"Channel Send"}
-								fn={setChannelVolume}
-								min="-60"
-								max="6"
-								defaultValue="-60"
-								step="0.1"
-								effect={chorusChannel}
-								setEffect={setChorusChannel}
-								stateEffect={effects}
-							/>
+							<div className="flex gap-4">
+								<label>
+									Depth
+									<input
+										type={"number"}
+										min="0"
+										max="1"
+										step="0.1"
+										defaultValue={"0"}
+										onChange={(e) => {
+											console.log(e.target.value);
+											setChorusDepth(
+												effects.chorus,
+												parseFloat(e.target.value)
+											);
+										}}
+										className="text-right"
+									/>
+								</label>
+								<label>
+									Frequency
+									<input
+										type={"number"}
+										min="1"
+										max="1000"
+										step="1"
+										defaultValue={"1"}
+										onChange={(e) => {
+											console.log(e.target.value);
+											setChorusFrequency(
+												effects.chorus,
+												parseInt(e.target.value)
+											);
+										}}
+										className="text-right"
+									/>
+								</label>
+								<label>
+									Delay(ms)
+									<input
+										type={"number"}
+										min="0"
+										max="100000"
+										step="0"
+										defaultValue={"0"}
+										onChange={(e) => {
+											console.log(e.target.value);
+											setChorusDelay(effects.chorus, parseInt(e.target.value));
+										}}
+										className="text-right"
+									/>
+								</label>
+								<label>
+									Feedback
+									<input
+										type={"number"}
+										min="0"
+										max="1"
+										step="0.1"
+										defaultValue={"0"}
+										onChange={(e) => {
+											console.log(e.target.value);
+											setChorusFeedback(
+												effects.chorus,
+												parseFloat(e.target.value)
+											);
+										}}
+										className="text-right"
+									/>
+								</label>
+							</div>
 						</div>
-						<div className="flex gap-2 flex-wrap row-start-3 place-content-center">
+						<div className="flex gap-6 flex-wrap place-content-center border-4 p-4">
 							<h1>Reverb</h1>
 							<EffectToggleButton
-								effectChannel={reverbChannel}
 								name="Mute"
-								isState={isReverb}
-								stateFn={setIsReverb}
-								connectFn={connectChannelEffect}
-								muteFn={muteChannelEffect}
-								channelName={"reverb"}
+								effect={effects.reverb}
+								toggleFn={toggleEffect}
 							/>
-							<EffectSlider
-								player={player}
-								name={"Channel Send"}
-								fn={setChannelVolume}
-								min="-60"
-								max="6"
-								defaultValue="-60"
-								step="0.1"
-								effect={reverbChannel}
-								setEffect={setReverbChannel}
-								stateEffect={effects}
-							/>
+							<label className="">
+								Decay Time(s)
+								<input
+									type={"number"}
+									min="1"
+									max="60"
+									step="1"
+									defaultValue={"1"}
+									onChange={(e) => {
+										console.log(e.target.value);
+										setReverbDecay(effects.reverb, parseInt(e.target.value));
+									}}
+									className="text-right"
+								/>
+							</label>
+							<label className="">
+								Delay (s)
+								<input
+									type={"number"}
+									min="0"
+									max="100000"
+									step="1"
+									defaultValue={"0"}
+									onChange={(e) => {
+										console.log(e.target.value);
+										setReverbPreDelay(effects.reverb, parseInt(e.target.value));
+									}}
+									className="text-right"
+								/>
+							</label>
 						</div>
 					</div>
 				</div>
