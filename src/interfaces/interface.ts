@@ -1,4 +1,9 @@
 import * as Tone from "tone";
+import { ReactNode } from "react";
+
+export interface ChildrenProps {
+	children: ReactNode;
+}
 
 export interface PlayerContainer {
 	player: Tone.Player;
