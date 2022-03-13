@@ -42,7 +42,7 @@ export const SoundBetter = () => {
 				<h1 className="text-center text-2xl font-bold p-4">Sound Better</h1>
 				<div className="h-screen p-4 mx-auto">
 					<form className="flex flex-col" onSubmit={handleSubmit}>
-						<label className="flex flex-col place-self-center border-2 border-neutral-400 p-4 text-center hover:cursor-pointer">
+						<label className="flex flex-col place-self-center border-2 border-neutral-400 p-4 w-48 text-center hover:cursor-pointer">
 							Upload
 							<input
 								type="file"

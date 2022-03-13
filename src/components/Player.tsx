@@ -88,7 +88,7 @@ export default function Player({ player }: PlayerContainer) {
 	));
 
 	return (
-		<div className="border-4 p-4 m-4">
+		<div className="flex flex-col border-4 p-4 m-4">
 			<h1 className="text-center">Player</h1>
 			<div className="grid grid-cols-3 gap-4 p-4 justify-items-center">
 				<VolumeSlider
@@ -122,7 +122,7 @@ export default function Player({ player }: PlayerContainer) {
 				/> */}
 				<div className="row-start-2 col-start-2">
 					<h2 className="text-center mt-2 mb-4">Effects</h2>
-					<div className="flex xl:flex-nowrap flex-wrap gap-8">
+					<div className="flex 2xl:flex-nowrap flex-wrap gap-8">
 						<div className="flex gap-6 flex-wrap place-content-center border-4 p-4 w-96">
 							<h1>Distortion</h1>
 							<EffectToggleButton
