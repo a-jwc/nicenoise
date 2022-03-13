@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import Container from "./Container";
+import Container from "../components/Container";
 
 interface targetProp {
 	target: {
@@ -48,6 +48,7 @@ export const Register = () => {
 				"Content-Type": "application/json",
 			},
 			body: JSON.stringify(credentials),
+			credentials: "include",
 		})
 			.then((resp) => {
 				if (!resp.ok) {
@@ -61,9 +62,10 @@ export const Register = () => {
 					console.log("Login successful");
 					navigate("/", { replace: true });
 				}
-			}).catch((err) => {
-        throw Error("Error:", err)
-      });
+			})
+			.catch((err) => {
+				throw Error("Error:", err);
+			});
 	};
 
 	return (
