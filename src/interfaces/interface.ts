@@ -119,6 +119,8 @@ export interface AuthorProp {
 }
 
 export interface User {
-  username: string,
-  id: string,
+	username: string;
+	id: string;
+	email: string;
+	avatar: any;
 }

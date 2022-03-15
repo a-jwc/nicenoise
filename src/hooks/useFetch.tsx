@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { User } from "../interfaces/interface";
 
-export default function useFetch(url: string) {
+export default function useFetch<T>(url: string) {
 	const [isLoading, setIsLoading] = useState(false);
-	const [apiData, setApiData] = useState();
+	const [apiData, setApiData] = useState<T>();
 	const [error, setError] = useState<unknown>();
 
 	useEffect(() => {

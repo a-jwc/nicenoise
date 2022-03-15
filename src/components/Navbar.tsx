@@ -7,7 +7,7 @@ import UploadSound from "./UploadSound";
 export const Navbar = () => {
 	let navigate = useNavigate();
 	const [isLoggedIn, setIsLoggedIn] = useState(false);
-	const { isLoading, apiData, error } = useFetch(
+	const { isLoading, apiData, error } = useFetch<boolean>(
 		"http://localhost:8000/api/v1/user/isLoggedIn"
 	);
 	// if (apiData) setIsLoggedIn(apiData);
