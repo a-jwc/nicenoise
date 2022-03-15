@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ConnectToggleButtonProp } from "../interfaces/interface";
+import { ConnectToggleButtonProp } from "../../interfaces/interface";
 
 export function ConnectToggleButton({
 	player,

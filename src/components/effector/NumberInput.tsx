@@ -1,4 +1,4 @@
-import { NumberInputProp } from "../interfaces/interface";
+import { NumberInputProp } from "../../interfaces/interface";
 
 export const NumberInput = ({
 	name,

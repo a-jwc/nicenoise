@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { EffectToggleButtonProp } from "../interfaces/interface";
+import { EffectToggleButtonProp } from "../../interfaces/interface";
 
 export function EffectToggleButton({
 	name,

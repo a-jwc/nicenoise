@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Container from "../components/Container";
-import Player from "../components/TonePlayer";
+import Player from "../components/effector/TonePlayer";
 import { validFileType, returnFileSize } from "../utils/fileUpload";
 import { createTone } from "../utils/tone";
 import * as Tone from "tone";

@@ -1,4 +1,4 @@
-import { ToggleButtonProp } from "../interfaces/interface";
+import { ToggleButtonProp } from "../../interfaces/interface";
 
 export default function PlayerToggleButton({
 	player,

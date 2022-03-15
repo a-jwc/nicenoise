@@ -1,4 +1,4 @@
-import { PitchSliderProp } from "../interfaces/interface";
+import { PitchSliderProp } from "../../interfaces/interface";
 
 export function PitchSlider({
 	shifter,

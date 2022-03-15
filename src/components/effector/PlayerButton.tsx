@@ -1,4 +1,4 @@
-import { PlayerButtonProp } from "../interfaces/interface";
+import { PlayerButtonProp } from "../../interfaces/interface";
 
 export default function PlayerButton({ player, name, fn, styles }: PlayerButtonProp) {
 	return (

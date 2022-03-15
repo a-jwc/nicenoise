@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import * as Tone from "tone";
-import { PlayerContainer } from "../interfaces/interface";
+import { PlayerContainer } from "../../interfaces/interface";
 import {
 	initEffects,
 	updatePitchShift,
@@ -19,8 +19,8 @@ import {
 	setFilterFrequency,
 	setFilterType,
 	setFilterRolloff,
-} from "../utils/effects";
-import { loop, play, stop, volume } from "../utils/player";
+} from "../../utils/effects";
+import { loop, play, stop, volume } from "../../utils/player";
 import { EffectToggleButton } from "./EffectToggleButton";
 import PlayerButton from "./PlayerButton";
 import PlayerToggleButton from "./PlayerToggleButton";
@@ -28,7 +28,7 @@ import { VolumeSlider } from "./VolumeSlider";
 import { PitchSlider } from "./PitchSlider";
 import { ConnectToggleButton } from "./ConnectToggleButton";
 import { NumberInput } from "./NumberInput";
-import { BiquadFilters, FilterRollOffs } from "../utils/options";
+import { BiquadFilters, FilterRollOffs } from "../../utils/options";
 import { FilterRollOff, Recorder } from "tone";
 
 export default function TonePlayer({ player }: PlayerContainer) {
