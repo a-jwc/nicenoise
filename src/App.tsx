@@ -1,14 +1,16 @@
 import React from "react";
+import ReactModal from "react-modal";
 import { Outlet } from "react-router-dom";
 import "./App.css";
 import { Navbar } from "./components/Navbar";
-import { Home } from "./routes/Home";
+
+ReactModal.setAppElement("#root");
 
 function App() {
 	return (
 		<div className="">
-      <Navbar />
-      <Outlet />
+			<Navbar />
+			<Outlet />
 		</div>
 	);
 }

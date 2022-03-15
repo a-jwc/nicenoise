@@ -41,7 +41,7 @@ export const Register = () => {
 			throw Error("Passwords do not match");
 		}
 
-		fetch("http://localhost:8000/auth/register", {
+		fetch("http://localhost:8000/api/v1/auth/register", {
 			mode: "cors",
 			method: "POST",
 			headers: {
@@ -70,8 +70,8 @@ export const Register = () => {
 
 	return (
 		<Container>
-			<main className="bg-eggshell h-screen">
-				<h1 className="text-center text-2xl font-bold p-4">Register</h1>
+			<main>
+				<h1 className="text-center text-2xl font-bold p-4 text-white">Register</h1>
 				<div className="mx-auto my-4">
 					<form className="form" onSubmit={handleSubmit}>
 						<label className="form-field">
@@ -129,7 +129,7 @@ export const Register = () => {
 
 const Registered = () => {
 	return (
-		<div className="text-center mt-4">
+		<div className="text-center mt-4 text-white">
 			Already have an account? <Link to="/login">Login</Link>
 		</div>
 	);

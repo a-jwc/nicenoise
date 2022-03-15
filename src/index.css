@@ -8,16 +8,24 @@
 	}
 
 	.form-field {
-		@apply my-2 self-center flex flex-col;
+		@apply my-2 self-center flex flex-col text-white;
 	}
 
 	.input-field {
-		@apply mt-2 px-2 py-1;
+		@apply mt-2 px-2 py-1 text-black;
 	}
 
 	.form {
 		@apply flex flex-col w-1/3 mx-auto;
 	}
+
+	.navbar li {
+		@apply hover:text-red-300;
+	}
+
+  html {
+    @apply bg-gradient-to-r from-indigo-500 via-purple-400 to-pink-300
+  }
 }
 
 html {

@@ -31,7 +31,7 @@ import { NumberInput } from "./NumberInput";
 import { BiquadFilters, FilterRollOffs } from "../utils/options";
 import { FilterRollOff, Recorder } from "tone";
 
-export default function Player({ player }: PlayerContainer) {
+export default function TonePlayer({ player }: PlayerContainer) {
 	const [effects, setEffects] = useState({
 		bitcrusher: new Tone.BitCrusher(),
 		distortion: new Tone.Distortion(),

@@ -1,11 +1,11 @@
 import { useState } from "react";
 import Container from "../components/Container";
-import Player from "../components/Player";
+import Player from "../components/TonePlayer";
 import { validFileType, returnFileSize } from "../utils/fileUpload";
 import { createTone } from "../utils/tone";
 import * as Tone from "tone";
 
-export const SoundBetter = () => {
+export const Effector = () => {
 	const [file, setFile] = useState<File>();
 	const [fileSize, setFileSize] = useState<string | undefined>("");
 	const [state, setState] = useState({
@@ -20,7 +20,7 @@ export const SoundBetter = () => {
 				setFile(file);
 				setFileSize(returnFileSize(file.size));
 			} else {
-        throw Error("invalid file type")
+				throw Error("invalid file type");
 			}
 		}
 	};
@@ -38,24 +38,23 @@ export const SoundBetter = () => {
 
 	return (
 		<Container>
-			<div className="bg-eggshell">
-				<h1 className="text-center text-2xl font-bold p-4">Sound Better</h1>
-				<div className="h-screen p-4 mx-auto">
-					<form className="flex flex-col" onSubmit={handleSubmit}>
-						<label className="flex flex-col place-self-center border-2 border-neutral-400 p-4 w-48 text-center hover:cursor-pointer">
-							Upload
-							<input
-								type="file"
-								accept="audio/*"
-								className="mt-2 opacity-0 hover:cursor-pointer"
-								onChange={(e) => handleFileUpload(e)}
-                required
-							/>
-						</label>
+			<h1 className="text-center text-2xl font-bold p-4">Effector</h1>
+			<div className="h-screen p-4 mx-auto">
+				<form className="flex flex-col" onSubmit={handleSubmit}>
+					<label className="flex flex-col place-self-center border-2 border-neutral-400 p-4 w-48 text-center hover:cursor-pointer">
+						Upload
 						<input
-							type="submit"
-							className="place-self-center w-16 h-8 bg-red-500 m-4 text-white hover:cursor-pointer"
+							type="file"
+							accept="audio/*"
+							className="mt-2 opacity-0 hover:cursor-pointer"
+							onChange={(e) => handleFileUpload(e)}
+							required
 						/>
+					</label>
+					<input
+						type="submit"
+						className="place-self-center w-16 h-8 bg-red-500 m-4 text-white hover:cursor-pointer"
+					/>
 					<div className="flex flex-row gap-4 mx-auto">
 						<div>
 							{file?.name.length !== undefined
@@ -64,9 +63,8 @@ export const SoundBetter = () => {
 						</div>
 						<div>{fileSize !== "" ? `File size: ${fileSize}` : ""}</div>
 					</div>
-					</form>
-					<div>{state.isSubmitted && <Player player={state.player} />}</div>
-				</div>
+				</form>
+				<div>{state.isSubmitted && <Player player={state.player} />}</div>
 			</div>
 		</Container>
 	);

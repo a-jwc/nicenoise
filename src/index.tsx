@@ -4,10 +4,11 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { SoundBetter } from "./routes/SoundBetter";
+import { Effector } from "./routes/Effector";
 import { Login } from "./routes/Login";
 import { Home } from "./routes/Home";
-import { Register } from "./components/Register";
+import { Register } from "./routes/Register";
+import Profile from "./routes/Profile";
 
 ReactDOM.render(
 	<React.StrictMode>
@@ -15,9 +16,10 @@ ReactDOM.render(
 			<Routes>
 				<Route path="/" element={<App />}>
 					<Route path="/" element={<Home />} />
-					<Route path="better" element={<SoundBetter />} />
+					<Route path="effector" element={<Effector />} />
 					<Route path="login" element={<Login />} />
 					<Route path="register" element={<Register />} />
+					<Route path="profile" element={<Profile />} />
 				</Route>
 			</Routes>
 		</Router>
