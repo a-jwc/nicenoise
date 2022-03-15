@@ -22,7 +22,7 @@ export function ConnectToggleButton({
 					}
 					setConnect(!connect);
 				}}
-				className={`border-2 border-black p-1 w-24 transition-colors ${styles} ${
+				className={`border-2 text-white p-1 w-24 transition-colors ${styles} ${
 					connect ? "bg-red-300" : "bg-blue-300"
 				}`}
 			>

@@ -7,7 +7,8 @@ export default function UploadSound() {
 	const [file, setFile] = useState<File>();
 	const [fileSize, setFileSize] = useState<string | undefined>("");
 	const [modalIsOpen, setModalIsOpen] = useState(false);
-  let navigate = useNavigate();
+	const [error, setError] = useState("");
+	let navigate = useNavigate();
 
 	const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
 		if (event.target.files !== null) {
@@ -33,19 +34,23 @@ export default function UploadSound() {
 				body: formData,
 				credentials: "include",
 			});
+			console.log(res.status);
+			if (res.status === 401) {
+				setError("Please login or register to upload");
+				throw Error("Unauthorized");
+			}
+			if (!res.ok) throw Error("Could not get upload");
 			const data = await res.json();
 			console.log(data);
 			navigate("/", { replace: true });
 		} catch (err) {
-			throw new Error("Error uploading");
-		}
+			throw Error("Error uploading");
+		} 
 	};
 
 	const openModal = () => {
 		setModalIsOpen(true);
 	};
-
-	const afterOpenModal = () => {};
 
 	const closeModal = () => {
 		setModalIsOpen(false);
@@ -58,7 +63,6 @@ export default function UploadSound() {
 			</button>
 			<ReactModal
 				isOpen={modalIsOpen}
-				onAfterOpen={afterOpenModal}
 				onRequestClose={closeModal}
 				contentLabel="Upload"
 				style={{
@@ -75,7 +79,7 @@ export default function UploadSound() {
 						X
 					</button>
 					<form className="flex flex-col" onSubmit={handleSubmit}>
-						<label className="flex flex-col place-self-center p-4 w-20 h-16 text-center hover:cursor-pointer">
+						<label className="flex flex-col place-self-center border-2 text-center w-20 h-10 hover:cursor-pointer">
 							Upload
 							<input
 								type="file"
@@ -87,7 +91,7 @@ export default function UploadSound() {
 						</label>
 						<input
 							type="submit"
-							className="place-self-center w-16 h-8 bg-red-500 m-4 text-white hover:cursor-pointer"
+							className="place-self-center w-16 h-8 bg-pink-300 m-4 text-white hover:cursor-pointer"
 						/>
 						<div className="flex flex-row gap-4 mx-auto">
 							<div>
@@ -98,6 +102,9 @@ export default function UploadSound() {
 							<div>{fileSize !== "" ? `File size: ${fileSize}` : ""}</div>
 						</div>
 					</form>
+					<div className="text-center text-red-500">
+						{error.length !== 0 ? error : ""}
+					</div>
 				</div>
 			</ReactModal>
 		</>

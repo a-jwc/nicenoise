@@ -88,7 +88,7 @@ export default function TonePlayer({ player }: PlayerContainer) {
 	));
 
 	return (
-		<div className="flex flex-col border-4 p-4 m-4">
+		<div className="flex flex-col border-4 p-4 m-4 text-white">
 			<h1 className="text-center">Player</h1>
 			<div className="grid grid-cols-3 gap-4 p-4 justify-items-center">
 				<VolumeSlider

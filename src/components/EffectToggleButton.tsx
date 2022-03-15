@@ -16,7 +16,7 @@ export function EffectToggleButton({
           toggleFn(effect);
           setMute(!mute);
 				}}
-				className={`border-2 border-black p-1 w-24 transition-colors ${styles} ${
+				className={`border-2 p-1 w-24 transition-colors ${styles} ${
 					mute ? "bg-red-300" : "bg-blue-300"
 				}`}
 			>

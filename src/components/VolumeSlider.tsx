@@ -11,7 +11,7 @@ export function VolumeSlider({
   styles
 }: SliderProp) {
 	return (
-		<div className="p-4">
+		<div className="p-4 text-white">
 			<label>
 				{name}
 				<input

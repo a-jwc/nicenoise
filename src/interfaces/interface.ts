@@ -106,3 +106,19 @@ export interface NumberInputProp {
 	effect: any;
 	styles?: string;
 }
+
+export interface AuthorProp {
+	id: number;
+	title: string;
+	published: boolean;
+	authorName: string;
+	authorId: number;
+	sound: string;
+	uploadDate: string;
+	coverImage: string;
+}
+
+export interface User {
+  username: string,
+  id: string,
+}

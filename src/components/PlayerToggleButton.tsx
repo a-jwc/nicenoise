@@ -19,7 +19,7 @@ export default function PlayerToggleButton({
 						console.log(state);
 					}
 				}}
-				className={`border-2 border-black p-1 transition-colors ${styles} ${
+				className={`border-2 text-white p-1 transition-colors ${styles} ${
 					!state ? "bg-red-300" : ""
 				}`}
 			>

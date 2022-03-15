@@ -1,7 +1,6 @@
 import Container from "../components/Container";
-import Playback from "../components/Playback";
+import Feed from "../components/Feed";
 import TopPosts from "../components/TopPosts";
-import UploadSound from "../components/UploadSound";
 
 export const Home = () => {
 	return (
@@ -9,9 +8,9 @@ export const Home = () => {
 			<Container>
 				<div className="grid grid-cols-3 gap-4">
 					<div className="row-start-1 col-start-1">
-						<TopPosts />
+						{/* <TopPosts /> */}
 					</div>
-					<Playback />
+					<Feed />
 				</div>
 			</Container>
 		</>
