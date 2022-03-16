@@ -3,19 +3,22 @@ import { Link, useNavigate } from "react-router-dom";
 import useFetch from "../hooks/useFetch";
 import usePost from "../hooks/usePost";
 import UploadSound from "./UploadSound";
+import { useAppDispatch, useAppSelector } from "../hooks/hooks";
+import { selectIsLoggedIn, logout } from "../features/user/userSlice";
+import { useSelector } from "react-redux";
 
 export const Navbar = () => {
 	let navigate = useNavigate();
 	const [isLoggedIn, setIsLoggedIn] = useState(false);
 	const { isLoading, apiData, error } = useFetch<boolean>(
-		"http://localhost:8000/api/v1/user/isLoggedIn"
+		"http://localhost:8000/api/v1/user/is-logged-in"
 	);
-	// if (apiData) setIsLoggedIn(apiData);
+	const dispatch = useAppDispatch();
+  const loggedIn = useAppSelector(selectIsLoggedIn)
 
 	useEffect(() => {
 		if (apiData) setIsLoggedIn(apiData);
-		console.log("after login", apiData);
-	}, [apiData]);
+	}, [apiData, loggedIn]);
 
 	return (
 		<>
@@ -50,6 +53,7 @@ export const Navbar = () => {
 											);
 											if (!res.ok) throw Error("Could not fetch data");
 											const data = await res.json();
+                      dispatch(logout())
 											navigate("/", { replace: true });
 										} catch (err) {
 											console.error(err);

@@ -1,6 +1,8 @@
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import Container from "../components/Container";
+import { login } from "../features/user/userSlice";
 import usePost from "../hooks/usePost";
 
 interface targetProp {
@@ -16,6 +18,7 @@ export const Login = () => {
 	let navigate = useNavigate();
 	let location = useLocation();
 	let from = location.pathname;
+  const dispatch = useDispatch();
 
 	const onUsernameChange = ({ target: { value } }: targetProp) => {
 		setUsername(value);
@@ -33,7 +36,6 @@ export const Login = () => {
 			username: data.get("username"),
 			password: data.get("password"),
 		};
-		console.log(credentials);
 		setCredentials(credentials);
 
 		try {
@@ -48,6 +50,7 @@ export const Login = () => {
 			});
 			if (!res.ok) throw Error("Could not fetch data");
 			const data = await res.json();
+      dispatch(login())
 			navigate("/", { replace: true });
 		} catch (err) {
 			console.error(err);

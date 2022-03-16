@@ -9,20 +9,24 @@ import { Login } from "./routes/Login";
 import { Home } from "./routes/Home";
 import { Register } from "./routes/Register";
 import Profile from "./routes/Profile";
+import { Provider } from "react-redux";
+import { store } from "./store";
 
 ReactDOM.render(
 	<React.StrictMode>
-		<Router>
-			<Routes>
-				<Route path="/" element={<App />}>
-					<Route path="/" element={<Home />} />
-					<Route path="effector" element={<Effector />} />
-					<Route path="login" element={<Login />} />
-					<Route path="register" element={<Register />} />
-					<Route path="profile" element={<Profile />} />
-				</Route>
-			</Routes>
-		</Router>
+		<Provider store={store}>
+			<Router>
+				<Routes>
+					<Route path="/" element={<App />}>
+						<Route path="/" element={<Home />} />
+						<Route path="effector" element={<Effector />} />
+						<Route path="login" element={<Login />} />
+						<Route path="register" element={<Register />} />
+						<Route path="profile" element={<Profile />} />
+					</Route>
+				</Routes>
+			</Router>
+		</Provider>
 	</React.StrictMode>,
 	document.getElementById("root")
 );
