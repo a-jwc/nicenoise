@@ -40,6 +40,14 @@
 	html {
 		@apply bg-gradient-to-r from-indigo-500 via-purple-400 to-pink-300;
 	}
+
+  .avatar {
+    @apply w-[40vw] h-[40vw] max-w-[15rem] max-h-[15rem] min-w-[10rem] min-h-[10rem]
+  }
+
+  .effect {
+    @apply object-contain
+  }
 }
 
 html {

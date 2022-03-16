@@ -50,12 +50,12 @@ export default function Profile() {
 
 	return (
 		<Container>
-			<div className="lg:grid lg:grid-cols-2 m-12">
+			<div className="lg:grid lg:grid-cols-2 flex flex-col gap-8 items-center place-items-center m-12">
 				{isLoading && <span className="text-white">Loading...</span>}
 				{!isLoading && error ? (
 					<span className="text-white">Error</span>
 				) : (
-					<div className="bg-white bg-opacity-10 max-w-fit p-8">
+					<div className="bg-white bg-opacity-10 max-w-fit p-8 w-[33vw] min-w-fit justify-self-start">
 						<div>
 							<div>
 								<Avatar image={avatar} />

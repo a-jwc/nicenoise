@@ -13,12 +13,12 @@ export default function Avatar({ image }: { image: Blob | undefined }) {
 			onMouseLeave={() => setImageHover(false)}
 		>
 			{image ? (
-				<div className="mask rounded-full w-72 h-72 flex flex-col place-content-end text-center pb-4">
+				<div className="avatar mask rounded-full flex flex-col place-content-end text-center pb-4">
 					<img src={URL.createObjectURL(image)} alt="profile"></img>
 					{imageHover ? <UploadModal {...Avatar.defaultProps} /> : <></>}
 				</div>
 			) : (
-				<div className="rounded-full bg-gradient-to-t from-teal-300 to-purple-300 w-72 h-72 flex flex-col text-white place-content-end pb-4">
+				<div className="avatar rounded-full bg-gradient-to-t from-teal-300 to-purple-300 w-72 h-72 flex flex-col text-white place-content-end pb-4">
 					{imageHover ? <UploadModal {...Avatar.defaultProps} /> : <></>}
 				</div>
 			)}

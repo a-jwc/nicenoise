@@ -11,8 +11,9 @@ export const NumberInput = ({
 	styles,
 }: NumberInputProp) => {
 	return (
-		<label className="text-white">
+		<label className="text-white flex flex-col items-center p-1">
 			{name}
+      <br/>
 			<input
 				type={"number"}
 				min={min}
@@ -22,7 +23,7 @@ export const NumberInput = ({
 				onChange={(e) => {
 					setEffect(effect, parseFloat(e.target.value));
 				}}
-				className="text-right text-black"
+				className="text-right text-black p-1"
 			/>
 		</label>
 	);

@@ -38,13 +38,13 @@ export const Effector = () => {
 
 	return (
 		<Container>
-			<div className="bg-white bg-opacity-10 max-w-fit mx-auto">
+			<div className="bg-white bg-opacity-10 max-w-fit mx-auto object-contain">
 				<h1 className="text-center text-2xl font-bold p-4 text-white">
 					Effector
 				</h1>
 				<div className="h-max p-4 mx-auto">
 					<form className="flex flex-col" onSubmit={handleSubmit}>
-						<label className="flex flex-col place-self-center border-2 p-4 w-48 text-center text-white hover:cursor-pointer">
+						<label className="flex flex-col place-self-center border-2 p-4 w-48 mx-12 text-center text-white hover:cursor-pointer">
 							Upload
 							<input
 								type="file"
@@ -67,7 +67,7 @@ export const Effector = () => {
 							<div>{fileSize !== "" ? `File size: ${fileSize}` : ""}</div>
 						</div>
 					</form>
-					<div>{state.isSubmitted && <Player player={state.player} />}</div>
+					{state.isSubmitted && <Player player={state.player} />}
 				</div>
 			</div>
 		</Container>

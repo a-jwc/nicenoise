@@ -4,13 +4,13 @@ import {
 } from "../../interfaces/interface";
 
 export default function EffectSelectInput({
-  name,
+	name,
 	setEffect,
 	effect,
 	options,
 }: EffectSelectInputProp) {
 	return (
-		<label className="text-black">
+		<label className="text-black flex flex-col items-center">
 			<p className="text-white">{name}</p>
 			<select
 				onChange={(e) => {
@@ -18,7 +18,9 @@ export default function EffectSelectInput({
 				}}
 			>
 				{options.map((option: string) => (
-					<option value={option}>{option}</option>
+					<option value={option} key={option}>
+						{option}
+					</option>
 				))}
 			</select>
 		</label>

@@ -93,9 +93,9 @@ export default function TonePlayer({ player }: PlayerContainer) {
 	));
 
 	return (
-		<div className="flex flex-col border-4 p-4 m-4 text-white">
+		<div className="flex flex-col border-4 p-4 m-4 text-white object-contain">
 			<h1 className="text-center">Player</h1>
-			<div className="grid grid-cols-3 gap-4 p-4 justify-items-center">
+			<div className="lg:grid lg:grid-cols-3 flex flex-col gap-4 2xs:p-4 items-center lg:place-items-center">
 				<VolumeSlider
 					player={player}
 					name="Volume"
@@ -127,8 +127,8 @@ export default function TonePlayer({ player }: PlayerContainer) {
 				/> */}
 				<div className="row-start-2 col-start-2">
 					<h2 className="text-center mt-2 mb-4">Effects</h2>
-					<div className="flex 2xl:flex-nowrap flex-wrap gap-8">
-						<div className="flex gap-6 flex-wrap place-content-center border-4 p-4 w-96">
+					<div className="flex 2xl:flex-nowrap flex-wrap items-center gap-8 lg:w-fit w-[33vw]">
+						<div className="effect flex gap-6 flex-wrap place-content-center border-4 xs:p-4 p-2 w-96">
 							<h1>Distortion</h1>
 							<EffectToggleButton
 								name="Mute"
@@ -151,7 +151,7 @@ export default function TonePlayer({ player }: PlayerContainer) {
 								options={distortionOversample}
 							/>
 						</div>
-						<div className="flex gap-2 flex-wrap place-content-center border-4 p-4">
+						<div className="flex gap-2 flex-wrap place-content-center border-4 xs:p-4 p-2">
 							<h1>BitCrusher</h1>
 							<EffectToggleButton
 								name="Mute"
@@ -168,14 +168,14 @@ export default function TonePlayer({ player }: PlayerContainer) {
 								effect={effects.bitcrusher}
 							/>
 						</div>
-						<div className="flex gap-2 flex-wrap place-content-center border-4 p-4">
+						<div className="flex gap-2 flex-wrap place-content-center border-4 xs:p-4 p-2">
 							<h1>Chorus</h1>
 							<EffectToggleButton
 								name="Mute"
 								effect={effects.chorus}
 								toggleFn={toggleEffect}
 							/>
-							<div className="flex gap-4">
+							{/* <div className="flex xl:flex-row flex-col gap-4"> */}
 								<NumberInput
 									name="Depth"
 									min="0"
@@ -212,9 +212,9 @@ export default function TonePlayer({ player }: PlayerContainer) {
 									setEffect={setChorusFeedback}
 									effect={effects.chorus}
 								/>
-							</div>
+							{/* </div> */}
 						</div>
-						<div className="flex gap-6 flex-wrap place-content-center border-4 p-4">
+						<div className="flex gap-6 flex-wrap place-content-center border-4 xs:p-4 p-2">
 							<h1>Reverb</h1>
 							<EffectToggleButton
 								name="Mute"
@@ -240,7 +240,7 @@ export default function TonePlayer({ player }: PlayerContainer) {
 								effect={effects.reverb}
 							/>
 						</div>
-						<div className="flex gap-6 flex-wrap place-content-center border-4 p-4">
+						<div className="flex gap-6 flex-wrap place-content-center border-4 xs:p-4 p-2">
 							<h1>Filter</h1>
 							<ConnectToggleButton
 								player={player}
@@ -249,7 +249,7 @@ export default function TonePlayer({ player }: PlayerContainer) {
 								connectFn={connectFilter}
 								disconnectFn={disconnectFilter}
 							/>
-							<label className="">
+							<label className="text-center">
 								Frequency(Hz)
 								<input
 									type={"range"}
@@ -263,6 +263,7 @@ export default function TonePlayer({ player }: PlayerContainer) {
 											parseInt(e.target.value)
 										);
 									}}
+                  className="max-w-[150px] w-3/4"
 								/>
 							</label>
 							<EffectSelectInput

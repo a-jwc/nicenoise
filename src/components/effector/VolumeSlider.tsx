@@ -11,7 +11,7 @@ export function VolumeSlider({
   styles
 }: SliderProp) {
 	return (
-		<div className="p-4 text-white">
+		<div className=" text-white m-8">
 			<label>
 				{name}
 				<input
@@ -23,7 +23,7 @@ export function VolumeSlider({
 					onChange={(e) => {
 						fn(player, parseFloat(e.target.value));
 					}}
-          className="-rotate-90"
+          className="lg:-rotate-90"
 				/>
 			</label>
 		</div>

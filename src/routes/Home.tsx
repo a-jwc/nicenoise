@@ -7,7 +7,7 @@ export const Home = () => {
 	return (
 		<>
 			<Container>
-				<div className="grid grid-cols-3 gap-4">
+				<div className="lg:grid lg:grid-cols-3 flex flex-col gap-4 place-items-center">
 					<div className="row-start-1 col-start-1">{/* <TopPosts /> */}</div>
 					<Feed url={`http://localhost:8000/api/v1/sounds?order=${order}`} />
 				</div>
