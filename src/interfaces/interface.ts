@@ -110,15 +110,15 @@ export interface NumberInputProp {
 }
 
 export interface EffectOptionProp {
-  value: string;
-  name: string;
+	value: string;
+	name: string;
 }
 
 export interface EffectSelectInputProp {
-  name: string;
+	name: string;
 	setEffect: Function;
-  effect: any;
-  options: any;
+	effect: any;
+	options: any;
 }
 
 // * User
@@ -131,6 +131,7 @@ export interface AuthorProp {
 	sound: string;
 	uploadDate: string;
 	coverImage: string;
+	likesCount: number;
 }
 
 export interface User {
