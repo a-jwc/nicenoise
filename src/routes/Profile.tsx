@@ -16,6 +16,7 @@ export default function Profile() {
 		avatar: null,
 		id: 0,
 	});
+	const [avatar, setAvatar] = useState<Blob>();
 
 	const order = "desc";
 
@@ -30,19 +31,34 @@ export default function Profile() {
 				id: parseInt(apiData.id),
 			});
 		}
+		fetch("http://localhost:8000/api/v1/user/get-avatar", {
+			mode: "cors",
+			credentials: "include",
+		})
+			.then((res) => {
+				if (!res.ok) throw Error("Response not ok");
+				return res.blob();
+			})
+			.then((blob) => {
+				if (blob !== undefined) setAvatar(blob);
+			})
+			.catch((err) => {
+				console.error(err);
+				throw Error("Could not get avatar");
+			});
 	}, [apiData]);
 
 	return (
 		<Container>
-			<div className="grid grid-cols-2 m-12">
+			<div className="lg:grid lg:grid-cols-2 m-12">
 				{isLoading && <span className="text-white">Loading...</span>}
 				{!isLoading && error ? (
 					<span className="text-white">Error</span>
 				) : (
-					<div>
+					<div className="bg-white bg-opacity-10 max-w-fit p-8">
 						<div>
 							<div>
-								<Avatar image={userInfo.avatar} />
+								<Avatar image={avatar} />
 							</div>
 						</div>
 						<div className="flex flex-col gap-2 mt-4 text-white">

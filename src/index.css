@@ -23,9 +23,23 @@
 		@apply hover:text-red-300;
 	}
 
-  html {
-    @apply bg-gradient-to-r from-indigo-500 via-purple-400 to-pink-300
-  }
+	.mask {
+		position: relative;
+		overflow: hidden;
+	}
+
+	.mask img {
+		position: absolute;
+		left: 50%;
+		top: 50%;
+		-webkit-transform: translate(-50%, -50%);
+		-ms-transform: translate(-50%, -50%);
+		transform: translate(-50%, -50%) scale(1.5);
+	}
+
+	html {
+		@apply bg-gradient-to-r from-indigo-500 via-purple-400 to-pink-300;
+	}
 }
 
 html {
