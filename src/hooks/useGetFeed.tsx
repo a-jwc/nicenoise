@@ -21,5 +21,5 @@ export const useGetSoundInfo = (url: string) => {
 };
 
 export const useGetOrderedSounds = (soundInfo: AuthorProp[]) => {
-	return soundInfo.map((sound) => <Playback {...sound} />);
+	return soundInfo.map((sound) => <Playback key={sound.id} {...sound} />);
 };
