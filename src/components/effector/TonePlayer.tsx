@@ -28,8 +28,13 @@ import { VolumeSlider } from "./VolumeSlider";
 import { PitchSlider } from "./PitchSlider";
 import { ConnectToggleButton } from "./ConnectToggleButton";
 import { NumberInput } from "./NumberInput";
-import { BiquadFilters, FilterRollOffs } from "../../utils/options";
+import {
+	BiquadFilters,
+	distortionOversample,
+	FilterRollOffs,
+} from "../../utils/options";
 import { FilterRollOff, Recorder } from "tone";
+import EffectSelectInput from "./EffectSelectInput";
 
 export default function TonePlayer({ player }: PlayerContainer) {
 	const [effects, setEffects] = useState({
@@ -139,21 +144,12 @@ export default function TonePlayer({ player }: PlayerContainer) {
 								setEffect={setDistortionAmount}
 								effect={effects.distortion}
 							/>
-							<label>
-								Oversample
-								<select
-									onChange={(e) => {
-										setDistortionOversample(
-											effects.distortion,
-											e.target.value as OverSampleType
-										);
-									}}
-								>
-									<option value={"none"}>None</option>
-									<option value={"2x"}>2x</option>
-									<option value={"4x"}>4x</option>
-								</select>
-							</label>
+							<EffectSelectInput
+								name="Oversample"
+								setEffect={setDistortionOversample}
+								effect={effects.distortion}
+								options={distortionOversample}
+							/>
 						</div>
 						<div className="flex gap-2 flex-wrap place-content-center border-4 p-4">
 							<h1>BitCrusher</h1>
@@ -269,32 +265,18 @@ export default function TonePlayer({ player }: PlayerContainer) {
 									}}
 								/>
 							</label>
-							<label>
-								Filter Type
-								<select
-									onChange={(e) => {
-										setFilterType(
-											effects.filter,
-											e.target.value as BiquadFilterType
-										);
-									}}
-								>
-									{mapBiquadFilterOption}
-								</select>
-							</label>
-							<label>
-								Rolloff db
-								<select
-									onChange={(e) => {
-										setFilterRolloff(
-											effects.filter,
-											parseInt(e.target.value) as FilterRollOff
-										);
-									}}
-								>
-									{mapFilterRolloffOption}
-								</select>
-							</label>
+							<EffectSelectInput
+								name="Filter Type"
+								setEffect={setFilterType}
+								effect={effects.filter}
+								options={BiquadFilters}
+							/>
+              <EffectSelectInput
+								name="Rolloff db"
+								setEffect={setFilterRolloff}
+								effect={effects.filter}
+								options={FilterRollOffs}
+							/>
 						</div>
 					</div>
 				</div>

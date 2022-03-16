@@ -13,7 +13,7 @@ export default function UploadSound() {
 	const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
 		if (event.target.files !== null) {
 			const file = event.target.files[0];
-			if (validFileType(file)) {
+			if (validFileType(file, ["audio/mpeg", "audio/wav"])) {
 				setFile(file);
 				setFileSize(returnFileSize(file.size));
 			} else {
@@ -34,18 +34,16 @@ export default function UploadSound() {
 				body: formData,
 				credentials: "include",
 			});
-			console.log(res.status);
 			if (res.status === 401) {
 				setError("Please login or register to upload");
 				throw Error("Unauthorized");
 			}
 			if (!res.ok) throw Error("Could not get upload");
 			const data = await res.json();
-			console.log(data);
 			navigate("/", { replace: true });
 		} catch (err) {
 			throw Error("Error uploading");
-		} 
+		}
 	};
 
 	const openModal = () => {

@@ -1,6 +1,6 @@
-const fileTypes = ["audio/mpeg", "audio/wav"];
+export const soundFileTypes = ["audio/mpeg", "audio/wav"];
 
-export function validFileType(file: File) {
+export function validFileType(file: File, fileTypes: string[]) {
   return fileTypes.includes(file.type)
 }
 

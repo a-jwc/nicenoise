@@ -1,10 +1,12 @@
 import * as Tone from "tone";
 import { ReactNode } from "react";
 
+// * General
 export interface ChildrenProps {
 	children: ReactNode;
 }
 
+// * Effector
 export interface PlayerContainer {
 	player: Tone.Player;
 }
@@ -107,6 +109,19 @@ export interface NumberInputProp {
 	styles?: string;
 }
 
+export interface EffectOptionProp {
+  value: string;
+  name: string;
+}
+
+export interface EffectSelectInputProp {
+  name: string;
+	setEffect: Function;
+  effect: any;
+  options: any;
+}
+
+// * User
 export interface AuthorProp {
 	id: number;
 	title: string;
