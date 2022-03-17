@@ -21,8 +21,8 @@ export const Navbar = () => {
 	}, [apiData, loggedIn]);
 
 	return (
-		<nav className="my-4 mx-8 border-b-2 object-contain">
-			<ul className="navbar flex flex-row flex-wrap flex-shrink sm:gap-6 gap-2 text-white items-stretch object-contain font-bold">
+		<nav className="my-4 mx-8 border-b-2 object-contain pb-4">
+			<ul className="navbar flex flex-row flex-wrap flex-shrink xs:gap-6 gap-2 text-white sm:place-content-start place-content-evenly object-contain font-bold">
 				<li key={"Home"}>
 					<Link to="/">Home</Link>
 				</li>
