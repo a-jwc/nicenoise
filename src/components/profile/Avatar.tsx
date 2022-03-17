@@ -13,7 +13,7 @@ export default function Avatar({ image }: { image: Blob | undefined }) {
 			onMouseLeave={() => setImageHover(false)}
 		>
 			{image ? (
-				<div className="avatar mask rounded-full flex flex-col place-content-end text-center pb-4">
+				<div className="avatar mask rounded-full w-72 h-72 flex flex-col place-content-end text-center pb-4">
 					<img src={URL.createObjectURL(image)} alt="profile"></img>
 					{imageHover ? <UploadModal {...Avatar.defaultProps} /> : <></>}
 				</div>
