@@ -9,12 +9,14 @@ import { Login } from "./routes/Login";
 import { Home } from "./routes/Home";
 import { Register } from "./routes/Register";
 import Profile from "./routes/Profile";
-import { Provider } from "react-redux";
-import { store } from "./store";
+import { ReactQueryDevtools } from "react-query/devtools";
+import { QueryClient, QueryClientProvider } from "react-query";
+
+const queryClient = new QueryClient();
 
 ReactDOM.render(
 	<React.StrictMode>
-		<Provider store={store}>
+		<QueryClientProvider client={queryClient}>
 			<Router>
 				<Routes>
 					<Route path="/" element={<App />}>
@@ -26,7 +28,8 @@ ReactDOM.render(
 					</Route>
 				</Routes>
 			</Router>
-		</Provider>
+      <ReactQueryDevtools initialIsOpen={false} />
+		</QueryClientProvider>
 	</React.StrictMode>,
 	document.getElementById("root")
 );
