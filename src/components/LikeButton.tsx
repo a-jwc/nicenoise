@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { AiOutlineHeart } from "react-icons/ai";
 
 export default function LikeButton({
@@ -29,8 +29,6 @@ export default function LikeButton({
 				throw err;
 			});
 	};
-
-	useEffect(() => {});
 
 	return (
 		<div className="flex border-2 h-fit w-fit ml-4">

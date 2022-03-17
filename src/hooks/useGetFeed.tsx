@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import Playback from "../components/Playback";
-import { AuthorProp } from "../interfaces/interface";
+import { Sound } from "../interfaces/interface";
 
 export const useGetSoundInfo = (url: string) => {
-	const [soundInfo, setSoundInfo] = useState<AuthorProp[]>([]);
+	const [soundInfo, setSoundInfo] = useState<Sound[]>([]);
 
-	useEffect(() => {
+	const getSoundInfo = () => {
 		fetch(url)
 			.then((res) => {
 				if (!res.ok) throw Error("Could not get sound info");
@@ -16,11 +16,16 @@ export const useGetSoundInfo = (url: string) => {
 				console.error(err);
 				throw Error("Error getting sound info");
 			});
-	}, []);
+	};
+
+	useEffect(() => {
+		getSoundInfo();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [url]);
 
 	return soundInfo;
 };
 
-export const useGetOrderedSounds = (soundInfo: AuthorProp[]) => {
+export const useGetOrderedSounds = (soundInfo: Sound[]) => {
 	return soundInfo.map((sound) => <Playback key={sound.id} {...sound} />);
 };

@@ -33,7 +33,6 @@ import {
 	distortionOversample,
 	FilterRollOffs,
 } from "../../utils/options";
-import { FilterRollOff, Recorder } from "tone";
 import EffectSelectInput from "./EffectSelectInput";
 
 export default function TonePlayer({ player }: PlayerContainer) {
@@ -82,15 +81,12 @@ export default function TonePlayer({ player }: PlayerContainer) {
 		Tone.Destination.connect(recorder);
 
 		// setPitchShifter(pitchShift);
-	}, [player]);
 
-	const mapBiquadFilterOption = BiquadFilters.map((filter) => (
-		<option value={filter}>{filter}</option>
-	));
-
-	const mapFilterRolloffOption = FilterRollOffs.map((rolloff) => (
-		<option value={rolloff}>{rolloff}</option>
-	));
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [
+		player,
+		recorder,
+	]);
 
 	return (
 		<div className="flex flex-col border-4 p-4 m-4 text-white object-contain">
@@ -176,42 +172,42 @@ export default function TonePlayer({ player }: PlayerContainer) {
 								toggleFn={toggleEffect}
 							/>
 							{/* <div className="flex xl:flex-row flex-col gap-4"> */}
-								<NumberInput
-									name="Depth"
-									min="0"
-									max="1"
-									step="0.1"
-									defaultValue="0"
-									setEffect={setChorusDepth}
-									effect={effects.chorus}
-								/>
-								<NumberInput
-									name="Frequency(Hz)"
-									min="1"
-									max="20000000"
-									step="1"
-									defaultValue="1"
-									setEffect={setChorusFrequency}
-									effect={effects.chorus}
-								/>
-								<NumberInput
-									name="Delay(ms)"
-									min="0"
-									max="100000"
-									step="1"
-									defaultValue="0"
-									setEffect={setChorusDelay}
-									effect={effects.chorus}
-								/>
-								<NumberInput
-									name="Feedback"
-									min="0"
-									max="1"
-									step="0.1"
-									defaultValue="0"
-									setEffect={setChorusFeedback}
-									effect={effects.chorus}
-								/>
+							<NumberInput
+								name="Depth"
+								min="0"
+								max="1"
+								step="0.1"
+								defaultValue="0"
+								setEffect={setChorusDepth}
+								effect={effects.chorus}
+							/>
+							<NumberInput
+								name="Frequency(Hz)"
+								min="1"
+								max="20000000"
+								step="1"
+								defaultValue="1"
+								setEffect={setChorusFrequency}
+								effect={effects.chorus}
+							/>
+							<NumberInput
+								name="Delay(ms)"
+								min="0"
+								max="100000"
+								step="1"
+								defaultValue="0"
+								setEffect={setChorusDelay}
+								effect={effects.chorus}
+							/>
+							<NumberInput
+								name="Feedback"
+								min="0"
+								max="1"
+								step="0.1"
+								defaultValue="0"
+								setEffect={setChorusFeedback}
+								effect={effects.chorus}
+							/>
 							{/* </div> */}
 						</div>
 						<div className="flex gap-6 flex-wrap place-content-center border-4 xs:p-4 p-2">
@@ -263,7 +259,7 @@ export default function TonePlayer({ player }: PlayerContainer) {
 											parseInt(e.target.value)
 										);
 									}}
-                  className="max-w-[150px] w-3/4"
+									className="max-w-[150px] w-3/4"
 								/>
 							</label>
 							<EffectSelectInput
@@ -272,7 +268,7 @@ export default function TonePlayer({ player }: PlayerContainer) {
 								effect={effects.filter}
 								options={BiquadFilters}
 							/>
-              <EffectSelectInput
+							<EffectSelectInput
 								name="Rolloff db"
 								setEffect={setFilterRolloff}
 								effect={effects.filter}
