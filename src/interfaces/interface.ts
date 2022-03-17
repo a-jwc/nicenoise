@@ -122,7 +122,7 @@ export interface EffectSelectInputProp {
 }
 
 // * User
-export interface AuthorProp {
+export interface Sound {
 	id: number;
 	title: string;
 	published: boolean;
@@ -136,7 +136,16 @@ export interface AuthorProp {
 
 export interface User {
 	username: string;
-	id: string;
+	id: number;
 	email: string;
 	avatar: any;
+	likes: Like[];
+  sounds: Sound[]
+}
+
+export interface Like {
+  sound: Sound;
+	id: number;
+	soundId: number;
+	userId: number;
 }

@@ -1,10 +1,7 @@
-import { useEffect, useState } from "react";
-import { AiOutlineHeart } from "react-icons/ai";
-import { AuthorProp } from "../interfaces/interface";
+import { Sound } from "../interfaces/interface";
 import LikeButton from "./LikeButton";
 
-
-export default function Playback(soundInfo: AuthorProp) {
+export default function Playback(soundInfo: Sound) {
 	return (
 		<div className="flex flex-col lg:flex-row object-contain m-auto border-4 p-4 text-white w-[33vw] min-w-fit lg:items-center items-start">
 			<audio controls className="object-contain m-auto min-w-[15rem] w-[33vw]">
