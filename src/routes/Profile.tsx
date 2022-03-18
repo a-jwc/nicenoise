@@ -66,7 +66,7 @@ export default function Profile() {
 
 	return (
 		<Container>
-			<div className="lg:grid lg:grid-cols-2 flex flex-col gap-8 items-center place-items-center m-12">
+			<div className="lg:grid lg:grid-cols-2 flex flex-col gap-8 place-items-center items-center m-12 xl:max-w-fit">
 				{isLoading && <span className="text-white">Loading...</span>}
 				{!isLoading && error ? (
 					<span className="text-white">
@@ -102,7 +102,7 @@ export default function Profile() {
 						{userInfo.likes.length !== 0 ? (
 							<div className="flex flex-col gap-4 object-contain bg-white bg-opacity-10 p-4 m-4 min-w-fit">
 								{userInfo.likes.map((soundInfo) => {
-									return <Playback {...soundInfo.sound} />;
+									return <Playback {...soundInfo} />;
 								})}
 							</div>
 						) : (

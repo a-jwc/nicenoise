@@ -139,13 +139,6 @@ export interface User {
 	id: number;
 	email: string;
 	avatar: any;
-	likes: Like[];
+	likes: Sound[];
   sounds: Sound[]
-}
-
-export interface Like {
-  sound: Sound;
-	id: number;
-	soundId: number;
-	userId: number;
 }
