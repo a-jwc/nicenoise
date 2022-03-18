@@ -1,12 +1,7 @@
 import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useIsLoggedIn } from "../App";
 import Container from "../components/Container";
-
-interface targetProp {
-	target: {
-		value: string;
-	};
-}
 
 export const Register = () => {
 	const [state, setState] = useState({
@@ -15,6 +10,8 @@ export const Register = () => {
 		password: "",
 		confirmPassword: "",
 	});
+
+	const { setIsLoggedIn } = useIsLoggedIn();
 
 	let navigate = useNavigate();
 	let location = useLocation();
@@ -34,8 +31,6 @@ export const Register = () => {
 			password: data.get("password"),
 		};
 
-		console.log(credentials);
-
 		if (state.password !== state.confirmPassword) {
 			alert("Passwords do not match");
 			throw Error("Passwords do not match");
@@ -51,27 +46,25 @@ export const Register = () => {
 			credentials: "include",
 		})
 			.then((resp) => {
-				if (!resp.ok) {
-					throw Error("Could not fetch data");
-				}
+				if (!resp.ok) throw Error("Could not fetch data");
 				return resp.json();
 			})
 			.then((res) => {
-				console.log(res);
-				if (res.success === true) {
-					console.log("Login successful");
-					navigate("/", { replace: true });
-				}
+				console.log("Registration successful");
+				setIsLoggedIn(true);
+				navigate("/", { replace: true });
 			})
 			.catch((err) => {
-				throw Error("Error:", err);
+				throw err;
 			});
 	};
 
 	return (
 		<Container>
 			<main>
-				<h1 className="text-center text-2xl font-bold p-4 text-white">Register</h1>
+				<h1 className="text-center text-2xl font-bold p-4 text-white">
+					Register
+				</h1>
 				<div className="mx-auto my-4">
 					<form className="form" onSubmit={handleSubmit}>
 						<label className="form-field">
@@ -130,7 +123,10 @@ export const Register = () => {
 const Registered = () => {
 	return (
 		<div className="text-center mt-4 text-white">
-			Already have an account? <Link to="/login">Login</Link>
+			Already have an account?{" "}
+			<Link to="/login" className="hover:text-pink-300">
+				Login
+			</Link>
 		</div>
 	);
 };

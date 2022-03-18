@@ -1,27 +1,21 @@
 import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import Container from "../components/Container";
-
-interface targetProp {
-	target: {
-		value: string;
-	};
-}
+import { useIsLoggedIn } from "../App";
 
 export const Login = () => {
-	const [username, setUsername] = useState("");
-	const [password, setPassword] = useState("");
-	const [credentials, setCredentials] = useState({});
+	const [state, setState] = useState({
+		username: "",
+		password: "",
+	});
+	const { setIsLoggedIn } = useIsLoggedIn();
+
 	let navigate = useNavigate();
 	let location = useLocation();
 	let from = location.pathname;
 
-	const onUsernameChange = ({ target: { value } }: targetProp) => {
-		setUsername(value);
-	};
-
-	const onPasswordChange = ({ target: { value } }: targetProp) => {
-		setPassword(value);
+	const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		setState({ ...state, [e.target.name]: e.target.value });
 	};
 
 	const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -32,7 +26,6 @@ export const Login = () => {
 			username: data.get("username"),
 			password: data.get("password"),
 		};
-		setCredentials(credentials);
 
 		try {
 			const res = await fetch("http://localhost:8000/api/v1/auth/login", {
@@ -46,9 +39,9 @@ export const Login = () => {
 			});
 			if (!res.ok) throw Error("Could not fetch data");
 			const data = await res.json();
+			setIsLoggedIn(true);
 			navigate("/", { replace: true });
 		} catch (err) {
-			console.error(err);
 			throw Error("Error");
 		} finally {
 			console.log("Logged in");
@@ -66,8 +59,8 @@ export const Login = () => {
 							<input
 								type="text"
 								name="username"
-								value={username}
-								onChange={onUsernameChange}
+								value={state.username}
+								onChange={onChange}
 								className="input-field"
 							/>
 						</label>
@@ -76,8 +69,8 @@ export const Login = () => {
 							<input
 								type="password"
 								name="password"
-								value={password}
-								onChange={onPasswordChange}
+								value={state.password}
+								onChange={onChange}
 								className="input-field"
 							/>
 						</label>
@@ -93,7 +86,10 @@ export const Login = () => {
 const NotRegistered = () => {
 	return (
 		<div className="text-center mt-4 text-white">
-			Don't have an account? <Link to="/register">Create an account</Link>
+			Don't have an account?{" "}
+			<Link to="/register" className="hover:text-pink-300">
+				Create an account
+			</Link>
 		</div>
 	);
 };

@@ -1,40 +1,24 @@
-import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import { Link } from "react-router-dom";
 import useFetch from "../hooks/useFetch";
+import useLogout from "../hooks/useLogout";
 import UploadSound from "./UploadSound";
 
-export const Navbar = () => {
-	let navigate = useNavigate();
-	const [isLoggedIn, setIsLoggedIn] = useState(false);
-	const { isLoading, apiData, error } = useFetch<boolean>(
+export default function Navbar({
+	isLoggedIn,
+	setIsLoggedIn,
+}: {
+	isLoggedIn: boolean;
+	setIsLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
+}) {
+	const { apiData } = useFetch<boolean>(
 		"http://localhost:8000/api/v1/user/is-logged-in"
 	);
+	const { logout } = useLogout();
 
 	useEffect(() => {
 		if (apiData) setIsLoggedIn(apiData);
-	}, [apiData]);
-
-	const logout = async () => {
-		try {
-			const res = await fetch("http://localhost:8000/api/v1/auth/logout", {
-				mode: "cors",
-				method: "POST",
-				headers: {
-					"Content-Type": "application/json",
-				},
-				credentials: "include",
-			});
-			if (!res.ok) throw Error("Could not fetch data");
-			const data = await res.json();
-			navigate("/", { replace: true });
-		} catch (err) {
-			console.error(err);
-			throw Error("Error");
-		} finally {
-			console.log("Logged out");
-			setIsLoggedIn(false);
-		}
-	};
+	}, [apiData, isLoggedIn, setIsLoggedIn]);
 
 	return (
 		<nav className="my-4 mx-8 border-b-2 object-contain pb-4">
@@ -51,7 +35,13 @@ export const Navbar = () => {
 							<Link to="/profile">Profile</Link>
 						</li>,
 						<li key={"Logout"}>
-							<Link to="/" onClick={async () => logout()}>
+							<Link
+								to="/"
+								onClick={async () => {
+									logout();
+									setIsLoggedIn(false);
+								}}
+							>
 								Logout
 							</Link>
 						</li>,
@@ -67,4 +57,4 @@ export const Navbar = () => {
 			</ul>
 		</nav>
 	);
-};
+}
