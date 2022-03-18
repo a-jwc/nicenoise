@@ -22,9 +22,8 @@ export default function useFetch<T>(url: string) {
 				const data = await resp.json();
 				setApiData(data);
 			} catch (err) {
-        console.error(err);
 				setError(err);
-				throw Error("Error");
+				throw err;
 			} finally {
 				setIsLoading(false);
       }

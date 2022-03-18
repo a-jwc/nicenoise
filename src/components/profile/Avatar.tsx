@@ -9,8 +9,8 @@ export default function Avatar({ image }: { image: Blob | undefined }) {
 
 	return (
 		<div
-			onMouseEnter={() => setImageHover(true)}
-			onMouseLeave={() => setImageHover(false)}
+			onMouseEnter={() => setImageHover(() => !imageHover)}
+			onMouseLeave={() => setImageHover(() => !imageHover)}
 		>
 			{image ? (
 				<div className="avatar mask rounded-full flex flex-col place-content-end text-center pb-4">

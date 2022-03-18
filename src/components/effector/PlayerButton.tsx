@@ -1,6 +1,11 @@
 import { PlayerButtonProp } from "../../interfaces/interface";
 
-export default function PlayerButton({ player, name, fn, styles }: PlayerButtonProp) {
+export default function PlayerButton({
+	player,
+	name,
+	fn,
+	styles,
+}: PlayerButtonProp) {
 	return (
 		<div>
 			<button

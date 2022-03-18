@@ -83,10 +83,7 @@ export default function TonePlayer({ player }: PlayerContainer) {
 		// setPitchShifter(pitchShift);
 
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [
-		player,
-		recorder,
-	]);
+	}, [player, recorder]);
 
 	return (
 		<div className="flex flex-col border-4 p-4 m-4 text-white object-contain">
@@ -171,7 +168,6 @@ export default function TonePlayer({ player }: PlayerContainer) {
 								effect={effects.chorus}
 								toggleFn={toggleEffect}
 							/>
-							{/* <div className="flex xl:flex-row flex-col gap-4"> */}
 							<NumberInput
 								name="Depth"
 								min="0"
@@ -208,7 +204,6 @@ export default function TonePlayer({ player }: PlayerContainer) {
 								setEffect={setChorusFeedback}
 								effect={effects.chorus}
 							/>
-							{/* </div> */}
 						</div>
 						<div className="flex gap-6 flex-wrap place-content-center border-4 xs:p-4 p-2">
 							<h1>Reverb</h1>

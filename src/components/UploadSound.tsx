@@ -42,7 +42,7 @@ export default function UploadSound() {
 			const data = await res.json();
 			navigate("/", { replace: true });
 		} catch (err) {
-			throw Error("Error uploading");
+			throw err;
 		}
 	};
 

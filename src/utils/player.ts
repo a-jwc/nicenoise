@@ -9,7 +9,6 @@ export function stop(player: Tone.Player) {
 }
 
 export function volume(player: Tone.Player, level: number) {
-  console.log(level)
 	player.volume.value = level;
 }
 

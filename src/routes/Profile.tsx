@@ -6,6 +6,8 @@ import Avatar from "../components/profile/Avatar";
 import useFetch from "../hooks/useFetch";
 import { User } from "../interfaces/interface";
 
+const order = "desc";
+
 export default function Profile() {
 	const { isLoading, apiData, error } = useFetch<User>(
 		"http://localhost:8000/api/v1/user/profile"
@@ -21,8 +23,6 @@ export default function Profile() {
 	});
 	const [avatar, setAvatar] = useState<Blob>();
 
-	const order = "desc";
-
 	useEffect(() => {
 		if (apiData !== undefined) {
 			setUserInfo({
@@ -36,22 +36,22 @@ export default function Profile() {
 			});
 		}
 
-		fetch("http://localhost:8000/api/v1/user/get-avatar", {
-			mode: "cors",
-			credentials: "include",
-		})
-			.then((res) => {
-				if (!res.ok) throw Error("Response not ok");
-				return res.blob();
-			})
-			.then((blob) => {
-				if (blob !== undefined) setAvatar(blob);
-			})
-			.catch((err) => {
-				console.error(err);
-				throw Error("Could not get avatar");
-			});
-
+    if (userInfo.avatar) {
+      fetch("http://localhost:8000/api/v1/user/get-avatar", {
+        mode: "cors",
+        credentials: "include",
+      })
+        .then((res) => {
+          if (!res.ok) throw Error("Response not ok");
+          return res.blob();
+        })
+        .then((blob) => {
+          if (blob !== undefined) setAvatar(blob);
+        })
+        .catch((err) => {
+          throw err;
+        });
+    }
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [
 		apiData,
@@ -96,7 +96,7 @@ export default function Profile() {
 					{userInfo.likes.length !== 0 ? (
 						<div className="feed">
 							{userInfo.likes.map((soundInfo) => {
-								return <Playback {...soundInfo} />;
+								return <Playback key={soundInfo.id} {...soundInfo} />;
 							})}
 						</div>
 					) : (
