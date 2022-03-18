@@ -123,8 +123,8 @@ export default function TonePlayer({ player }: PlayerContainer) {
 				/> */}
 				<div className="row-start-2 col-start-2">
 					<h2 className="text-center mt-2 mb-4">Effects</h2>
-					<div className="flex 2xl:flex-nowrap flex-wrap items-center gap-8 lg:w-fit w-[33vw]">
-						<div className="effect flex gap-6 flex-wrap place-content-center border-4 xs:p-4 p-2 w-96">
+					<div className="flex xl:flex-nowrap flex-wrap place-content-center items-center gap-8 lg:w-fit w-[33vw] pb-4">
+						<div className="effect w-96">
 							<h1>Distortion</h1>
 							<EffectToggleButton
 								name="Mute"
@@ -147,7 +147,7 @@ export default function TonePlayer({ player }: PlayerContainer) {
 								options={distortionOversample}
 							/>
 						</div>
-						<div className="flex gap-2 flex-wrap place-content-center border-4 xs:p-4 p-2">
+						<div className="effect">
 							<h1>BitCrusher</h1>
 							<EffectToggleButton
 								name="Mute"
@@ -164,7 +164,7 @@ export default function TonePlayer({ player }: PlayerContainer) {
 								effect={effects.bitcrusher}
 							/>
 						</div>
-						<div className="flex gap-2 flex-wrap place-content-center border-4 xs:p-4 p-2">
+						<div className="effect">
 							<h1>Chorus</h1>
 							<EffectToggleButton
 								name="Mute"

@@ -5,7 +5,6 @@ import Playback from "../components/Playback";
 import Avatar from "../components/profile/Avatar";
 import useFetch from "../hooks/useFetch";
 import { User } from "../interfaces/interface";
-import { Sound } from "../interfaces/interface";
 
 export default function Profile() {
 	const { isLoading, apiData, error } = useFetch<User>(
@@ -66,14 +65,14 @@ export default function Profile() {
 
 	return (
 		<Container>
-			<div className="lg:grid lg:grid-cols-2 flex flex-col gap-8 place-items-center items-center m-12 xl:max-w-fit">
+			<div className="xl:grid xl:grid-cols-2 flex flex-col gap-6 place-items-center items-center m-12 xl:max-w-fit">
 				{isLoading && <span className="text-white">Loading...</span>}
 				{!isLoading && error ? (
 					<span className="text-white">
 						You have been logged out. Please login again.
 					</span>
 				) : (
-					<div className="bg-white bg-opacity-10 max-w-fit p-8 w-[33vw] min-w-fit justify-self-start lg:self-start lg:mt-10">
+					<div className="bg-white bg-opacity-10 max-w-fit p-8 w-[33vw] min-w-fit justify-self-start xl:self-start lg:mt-10">
 						<div>
 							<div>
 								<Avatar image={avatar} />
@@ -84,33 +83,25 @@ export default function Profile() {
 						</div>
 					</div>
 				)}
-				<div className="text-white">
-					<div>
-						<h1 className="font-bold text-xl ml-4">Sounds</h1>
-						{userInfo.sounds.length !== 0 ? (
-							<Feed
-								url={`http://localhost:8000/api/v1/sounds/user/${userInfo.id}?order=${order}`}
-							/>
-						) : (
-							<div className="flex flex-col gap-4 object-contain bg-white bg-opacity-10 p-4 m-4 min-w-fit">
-								No sounds yet!
-							</div>
-						)}
-					</div>
-					<div>
-						<h1 className="font-bold text-xl ml-4">Likes</h1>
-						{userInfo.likes.length !== 0 ? (
-							<div className="flex flex-col gap-4 object-contain bg-white bg-opacity-10 p-4 m-4 min-w-fit">
-								{userInfo.likes.map((soundInfo) => {
-									return <Playback {...soundInfo} />;
-								})}
-							</div>
-						) : (
-							<div className="flex flex-col gap-4 object-contain bg-white bg-opacity-10 p-4 m-4 min-w-fit">
-								No likes yet!
-							</div>
-						)}
-					</div>
+				<div className="text-white xl:w-[25vw]">
+					<h1 className="font-bold text-xl ml-4">Sounds</h1>
+					{userInfo.sounds.length !== 0 ? (
+						<Feed
+							url={`http://localhost:8000/api/v1/sounds/user/${userInfo.id}?order=${order}`}
+						/>
+					) : (
+						<div className="feed">No sounds yet!</div>
+					)}
+					<h1 className="font-bold text-xl ml-4">Likes</h1>
+					{userInfo.likes.length !== 0 ? (
+						<div className="feed">
+							{userInfo.likes.map((soundInfo) => {
+								return <Playback {...soundInfo} />;
+							})}
+						</div>
+					) : (
+						<div className="feed">No likes yet!</div>
+					)}
 				</div>
 			</div>
 		</Container>

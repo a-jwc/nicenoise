@@ -20,10 +20,7 @@ export default function LikeButton({
 				if (!res.ok) throw Error("Liked failed");
 				return res.json();
 			})
-			.then((json) => {
-        console.log(json.likesCount)
-				setNumLikes(json.likesCount);
-			})
+			.then((json) => setNumLikes(json.likesCount))
 			.catch((err) => {
 				console.error(err);
 				throw err;
@@ -35,7 +32,6 @@ export default function LikeButton({
 			<button
 				className="p-1"
 				onClick={(e) => {
-					console.log("liked", soundId);
 					updateLikes();
 				}}
 			>
