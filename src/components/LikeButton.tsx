@@ -1,5 +1,5 @@
-import { useState } from "react";
 import { AiOutlineHeart } from "react-icons/ai";
+import useUpdateLikes from "../hooks/useUpdateLikes";
 
 export default function LikeButton({
 	soundId,
@@ -8,24 +8,10 @@ export default function LikeButton({
 	soundId: number;
 	likeCount: number;
 }) {
-	const [numLikes, setNumLikes] = useState(likeCount);
-
-	const updateLikes = () => {
-		fetch(`http://localhost:8000/api/v1/sounds/like/${soundId}`, {
-			method: "POST",
-			mode: "cors",
-			credentials: "include",
-		})
-			.then((res) => {
-				if (!res.ok) throw Error("Liked failed");
-				return res.json();
-			})
-			.then((json) => setNumLikes(json.likesCount))
-			.catch((err) => {
-				console.error(err);
-				throw err;
-			});
-	};
+	const { numLikes, updateLikes } = useUpdateLikes({
+		soundId,
+		likeCount,
+	});
 
 	return (
 		<div className="flex border-2 h-fit w-fit ml-4">
