@@ -8,6 +8,7 @@ module.exports = {
 				"eggshell": "#eee",
 			},
 			screens: {
+        "3xs": "280px",
         "2xs": "360px",
 				"xs": "475px",
 				...defaultTheme.screens,
