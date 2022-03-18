@@ -4,7 +4,7 @@
 
 @layer components {
 	.submit {
-		@apply rounded-full bg-red-300 mx-auto px-4 py-2 mt-4 hover:cursor-pointer;
+		@apply rounded-full bg-red-300 text-white mx-auto px-4 py-2 mt-4 hover:cursor-pointer;
 	}
 
 	.form-field {
