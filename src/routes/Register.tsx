@@ -10,7 +10,7 @@ export const Register = () => {
 		password: "",
 		confirmPassword: "",
 	});
-
+	const [error, setError] = useState("");
 	const { setIsLoggedIn } = useIsLoggedIn();
 
 	let navigate = useNavigate();
@@ -21,7 +21,7 @@ export const Register = () => {
 		setState({ ...state, [e.target.name]: e.target.value });
 	};
 
-	const handleSubmit = (event: any) => {
+	const handleSubmit = async (event: any) => {
 		event.preventDefault();
 
 		const data = new FormData(event.currentTarget);
@@ -36,35 +36,41 @@ export const Register = () => {
 			throw Error("Passwords do not match");
 		}
 
-		fetch("http://localhost:8000/api/v1/auth/register", {
-			mode: "cors",
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify(credentials),
-			credentials: "include",
-		})
-			.then((resp) => {
-				if (!resp.ok) throw Error("Could not fetch data");
-				return resp.json();
-			})
-			.then((res) => {
-				console.log("Registration successful");
-				setIsLoggedIn(true);
-				navigate("/", { replace: true });
-			})
-			.catch((err) => {
-				throw err;
+		try {
+			const res = await fetch("http://localhost:8000/api/v1/auth/register", {
+				mode: "cors",
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify(credentials),
+				credentials: "include",
 			});
+			if (!res.ok) {
+        const json = await res.json()
+				throw Error(json.message);
+			}
+			const data = await res.json();
+			setIsLoggedIn(true);
+			navigate("/", { replace: true });
+		} catch (err) {
+			setError(err as string);
+			throw err;
+		} finally {
+			console.log("Registration successful");
+		}
 	};
 
+	// TODO: add error
 	return (
 		<Container>
 			<main className="bg-white bg-opacity-10 min-w-fit pb-8 px-4 w-1/2 mx-auto drop-shadow-2xl">
 				<h1 className="text-center text-2xl font-bold p-4 text-white">
 					Register
 				</h1>
+				<div className="text-red-500 text-center">
+					{error.length !== 0 ? `${error}` : ""}
+				</div>
 				<div className="mx-auto my-4">
 					<form className="form" onSubmit={handleSubmit}>
 						<label className="form-field">

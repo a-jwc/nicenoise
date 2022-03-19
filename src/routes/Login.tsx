@@ -9,6 +9,7 @@ export const Login = () => {
 		password: "",
 	});
 	const { setIsLoggedIn } = useIsLoggedIn();
+	const [error, setError] = useState("");
 
 	let navigate = useNavigate();
 	let location = useLocation();
@@ -42,7 +43,8 @@ export const Login = () => {
 			setIsLoggedIn(true);
 			navigate("/", { replace: true });
 		} catch (err) {
-			throw Error("Error");
+			setError("Invalid login.");
+			throw err;
 		} finally {
 			console.log("Logged in");
 		}
@@ -52,6 +54,7 @@ export const Login = () => {
 		<Container>
 			<main className="bg-white bg-opacity-10 min-w-fit pb-8 px-4 w-1/2 mx-auto drop-shadow-2xl">
 				<h1 className="text-center text-2xl font-bold p-4 text-white">Login</h1>
+				<div className="text-red-500 text-center">{error.length !== 0 ? `${error}` : ""}</div>
 				<div className="mx-auto my-4">
 					<form className="form" onSubmit={handleSubmit}>
 						<label className="form-field">
