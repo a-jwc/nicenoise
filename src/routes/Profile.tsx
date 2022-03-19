@@ -65,14 +65,14 @@ export default function Profile() {
 
 	return (
 		<Container>
-			<div className="xl:grid xl:grid-cols-2 flex flex-col gap-6 place-items-center items-center m-12 xl:max-w-fit">
+			<div className="lg:grid lg:auto-cols-min lg:grid-flow-col flex flex-col gap-6 place-items-center items-center lg:max-w-fit">
 				{isLoading && <span className="text-white">Loading...</span>}
 				{!isLoading && error ? (
 					<span className="text-white">
 						You have been logged out. Please login again.
 					</span>
 				) : (
-					<div className="bg-white bg-opacity-10 max-w-fit p-8 w-[33vw] min-w-fit justify-self-start xl:self-start lg:mt-10">
+					<div className="bg-white bg-opacity-10 max-w-fit p-8 m-8 w-[33vw] min-w-fit justify-self-center lg:self-start lg:mt-10 drop-shadow-2xl">
 						<div>
 							<div>
 								<Avatar image={avatar} />
@@ -83,8 +83,8 @@ export default function Profile() {
 						</div>
 					</div>
 				)}
-				<div className="text-white xl:w-[25vw]">
-					<h1 className="font-bold text-xl ml-4">Sounds</h1>
+				<div className="text-white">
+					<h1 className="font-bold text-xl ml-8">Sounds</h1>
 					{userInfo.sounds.length !== 0 ? (
 						<Feed
 							url={`http://localhost:8000/api/v1/sounds/user/${userInfo.id}?order=${order}`}
@@ -92,7 +92,7 @@ export default function Profile() {
 					) : (
 						<div className="feed">No sounds yet!</div>
 					)}
-					<h1 className="font-bold text-xl ml-4">Likes</h1>
+					<h1 className="font-bold text-xl ml-8">Likes</h1>
 					{userInfo.likes.length !== 0 ? (
 						<div className="feed">
 							{userInfo.likes.map((soundInfo) => {
