@@ -20,7 +20,7 @@
 	}
 
 	.navbar li {
-		@apply hover:text-red-300 hover:bg-white hover:bg-opacity-10 sm:p-2;
+		@apply hover:text-red-300 sm:p-2;
 	}
 
 	.mask {

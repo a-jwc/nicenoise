@@ -84,7 +84,7 @@ export default function Profile() {
 					</div>
 				)}
 				<div className="text-white">
-					<h1 className="font-bold text-xl ml-8">Sounds</h1>
+					<h1 className="font-bold text-xl ml-8">sounds</h1>
 					{userInfo.sounds.length !== 0 ? (
 						<Feed
 							url={`http://localhost:8000/api/v1/sounds/user/${userInfo.id}?order=${order}`}
@@ -92,7 +92,7 @@ export default function Profile() {
 					) : (
 						<div className="feed">No sounds yet!</div>
 					)}
-					<h1 className="font-bold text-xl ml-8">Likes</h1>
+					<h1 className="font-bold text-xl ml-8">likes</h1>
 					{userInfo.likes.length !== 0 ? (
 						<div className="feed">
 							{userInfo.likes.map((soundInfo) => {

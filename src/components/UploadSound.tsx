@@ -57,7 +57,7 @@ export default function UploadSound() {
 	return (
 		<>
 			<button onClick={openModal} className="font-bold">
-				Upload
+				upload
 			</button>
 			<ReactModal
 				isOpen={modalIsOpen}
