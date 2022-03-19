@@ -1,7 +1,4 @@
 import { useState } from "react";
-import useFetch from "../../hooks/useFetch";
-import usePost from "../../hooks/usePost";
-import { User } from "../../interfaces/interface";
 import UploadModal from "../UploadModal";
 
 export default function Avatar({ image }: { image: Blob | undefined }) {
