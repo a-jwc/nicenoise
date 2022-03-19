@@ -21,7 +21,7 @@ export default function Navbar({
 	}, [apiData, isLoggedIn, setIsLoggedIn]);
 
 	return (
-		<nav className="my-4 mx-8 border-b-2 object-contain pb-4">
+		<nav className="px-8 py-4 object-contain border-b-neutral-100 bg-black bg-opacity-5 drop-shadow-2xl">
 			<ul className="navbar flex flex-row flex-wrap flex-shrink xs:gap-6 gap-2 text-white sm:place-content-start place-content-evenly object-contain font-bold">
 				<li key={"Home"}>
 					<Link to="/">Home</Link>

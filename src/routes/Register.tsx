@@ -61,7 +61,7 @@ export const Register = () => {
 
 	return (
 		<Container>
-			<main>
+			<main className="bg-white bg-opacity-10 min-w-fit pb-8 px-4 w-1/2 mx-auto drop-shadow-2xl">
 				<h1 className="text-center text-2xl font-bold p-4 text-white">
 					Register
 				</h1>
