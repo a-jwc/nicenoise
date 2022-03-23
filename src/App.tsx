@@ -4,7 +4,7 @@ import { Outlet, useOutletContext } from "react-router-dom";
 import "./App.css";
 import Navbar from "./components/Navbar";
 
-ReactModal.setAppElement("#root");
+if (process.env.NODE_ENV !== "test") ReactModal.setAppElement("#root");
 
 export interface ContextType {
 	isLoggedIn: boolean;
@@ -17,7 +17,7 @@ function App() {
 	return (
 		<>
 			<Navbar isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
-			<Outlet context={{isLoggedIn, setIsLoggedIn}} />
+			<Outlet context={{ isLoggedIn, setIsLoggedIn }} />
 		</>
 	);
 }
