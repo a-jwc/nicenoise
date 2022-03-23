@@ -5,13 +5,13 @@ import useLogout from "../hooks/useLogout";
 import Dropdown from "./Dropdown";
 import UploadSound from "./UploadSound";
 
-  export default function Navbar({
-    isLoggedIn,
-    setIsLoggedIn,
-  }: {
-    isLoggedIn: boolean;
-    setIsLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
-  }) {
+export default function Navbar({
+	isLoggedIn,
+	setIsLoggedIn,
+}: {
+	isLoggedIn: boolean;
+	setIsLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
+}) {
 	const { apiData } = useFetch<boolean>(
 		"http://localhost:8000/api/v1/user/is-logged-in"
 	);
@@ -34,6 +34,9 @@ import UploadSound from "./UploadSound";
 				</li>
 				{isLoggedIn ? (
 					[
+						<li key={"Profile"}>
+							<Link to="/profile">profile</Link>
+						</li>,
 						<li key={"Logout"}>
 							<Link
 								to="/"
@@ -55,9 +58,12 @@ import UploadSound from "./UploadSound";
 					<UploadSound />
 				</li>
 			</ul>
-			<ul className="navbar flex justify-end flex-wrap flex-shrink xs:gap-6 gap-2 place-content-end object-contain font-bold w-1/2 ">
-        <Dropdown isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
-			</ul>
+			{/* <ul className="navbar flex justify-end flex-wrap flex-shrink xs:gap-6 gap-2 place-content-end object-contain font-bold w-1/2 ">
+				<li key={"Upload"}>
+					<UploadSound />
+				</li>
+				<Dropdown isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
+			</ul> */}
 		</nav>
 	);
 }

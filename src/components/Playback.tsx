@@ -3,7 +3,7 @@ import LikeButton from "./LikeButton";
 
 export default function Playback(soundInfo: Sound) {
 	return (
-		<div className="flex flex-col sm:flex-row object-contain m-auto p-6 text-white w-[33vw] min-w-fit lg:items-center items-start drop-shadow-2xl bg-white bg-opacity-10">
+		<div className="flex flex-col sm:flex-row object-contain m-auto p-6 text-white w-[33vw] min-w-fit lg:items-center items-start drop-shadow-2xl bg-white bg-opacity-10 playback">
 			<audio
 				controls
 				controlsList="nodownload"
