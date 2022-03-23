@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-export default function usePost(
+export default function usePost<T>(
 	url: string,
 	payload: any,
 	navigateURL: string
 ) {
 	let navigate = useNavigate();
 	const [isLoading, setIsLoading] = useState(false);
-	const [apiData, setApiData] = useState(null);
+	const [apiData, setApiData] = useState<T>();
 	const [error, setError] = useState<unknown>();
 
 	useEffect(() => {
@@ -38,6 +38,6 @@ export default function usePost(
 		};
 		fetchData();
 	}, [navigateURL, payload, url]);
-  
+
 	return { isLoading, apiData, error };
 }
