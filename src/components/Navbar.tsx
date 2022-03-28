@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { AiOutlineSetting } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import useFetch from "../hooks/useFetch";
 import useLogout from "../hooks/useLogout";
@@ -46,6 +47,11 @@ export default function Navbar({
 								}}
 							>
 								logout
+							</Link>
+						</li>,
+						<li key={"Settings"}>
+							<Link to="/settings" style={{ display: "flex" }}>
+								settings
 							</Link>
 						</li>,
 					]

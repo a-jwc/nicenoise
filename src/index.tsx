@@ -11,6 +11,7 @@ import { Register } from "./routes/Register";
 import Profile from "./routes/Profile";
 import { ReactQueryDevtools } from "react-query/devtools";
 import { QueryClient, QueryClientProvider } from "react-query";
+import Settings from "./routes/Settings";
 
 const queryClient = new QueryClient();
 
@@ -25,6 +26,7 @@ ReactDOM.render(
 						<Route path="login" element={<Login />} />
 						<Route path="register" element={<Register />} />
 						<Route path="profile" element={<Profile />} />
+            <Route path="settings" element={<Settings />} />
 					</Route>
 				</Routes>
 			</Router>
