@@ -8,10 +8,6 @@ import { FcMusic } from "react-icons/fc";
 import UploadSound from "./UploadSound";
 import useLogout from "../hooks/useLogout";
 
-function classNames(...classes: string[]) {
-	return classes.filter(Boolean).join(" ");
-}
-
 export default function Dropdown({
 	isLoggedIn,
 	setIsLoggedIn,

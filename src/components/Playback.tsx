@@ -12,7 +12,6 @@ export default function Playback(soundInfo: Sound) {
 			>
 				<source
 					src={`http://localhost:8000/api/v1/sounds/${soundInfo.id}`}
-					type="audio/mpeg"
 				/>
 			</audio>
 			<div className="flex flex-row items-center">
