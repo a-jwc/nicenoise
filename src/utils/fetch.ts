@@ -14,10 +14,8 @@ export const sendRequest = async (
 			credentials: "include",
 		});
 		if (!res.ok) throw Error("Could not fetch data");
-		const data = await res.json();
-		return data;
+		return res;
 	} catch (e) {
 		throw e;
-	} finally {
 	}
 };

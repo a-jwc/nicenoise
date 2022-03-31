@@ -2,6 +2,8 @@ import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useIsLoggedIn } from "../App";
 import Container from "../components/Container";
+import FormTextInput from "../components/FormTextInput";
+import { sendRequest } from "../utils/fetch";
 
 export const Register = () => {
 	const [state, setState] = useState({
@@ -36,32 +38,20 @@ export const Register = () => {
 			throw Error("Passwords do not match");
 		}
 
-		try {
-			const res = await fetch("http://localhost:8000/api/v1/auth/register", {
-				mode: "cors",
-				method: "POST",
-				headers: {
-					"Content-Type": "application/json",
-				},
-				body: JSON.stringify(credentials),
-				credentials: "include",
-			});
-			if (!res.ok) {
-        const json = await res.json()
-				throw Error(json.message);
-			}
-			const data = await res.json();
-			setIsLoggedIn(true);
-			navigate("/", { replace: true });
-		} catch (err) {
-			setError(err as string);
-			throw err;
-		} finally {
-			console.log("Registration successful");
-		}
+		const res = await sendRequest(
+			"http://localhost:8000/api/v1/auth/register",
+			credentials,
+			"POST"
+		);
+		if (!res.ok) {
+			setError("Invalid login.");
+      return;
+		} else {
+      setIsLoggedIn(true);
+      navigate("/", { replace: true });
+    }
 	};
 
-	// TODO: add error
 	return (
 		<Container>
 			<main className="bg-white bg-opacity-10 min-w-fit pb-8 px-4 w-1/2 mx-auto drop-shadow-2xl">
@@ -73,50 +63,32 @@ export const Register = () => {
 				</div>
 				<div className="mx-auto my-4">
 					<form className="form" onSubmit={handleSubmit}>
-						<label className="form-field">
-							Email
-							<input
-								type="text"
-								name="email"
-								value={state.email}
-								onChange={onChange}
-								className="input-field"
-								required
-							/>
-						</label>
-						<label className="form-field">
-							Username
-							<input
-								type="text"
-								name="username"
-								value={state.username}
-								onChange={onChange}
-								className="input-field"
-								required
-							/>
-						</label>
-						<label className="form-field">
-							Password
-							<input
-								type="password"
-								name="password"
-								value={state.password}
-								onChange={onChange}
-								className="input-field"
-								required
-							/>
-						</label>
-						<label className="form-field">
-							Confirm Password
-							<input
-								type="password"
-								name="confirmPassword"
-								value={state.confirmPassword}
-								onChange={onChange}
-								className="input-field"
-								required
-							/>
-						</label>
+						<FormTextInput
+							labelName="Email"
+							name="email"
+							value={state.email}
+							onChange={onChange}
+						/>
+						<FormTextInput
+							labelName="Username"
+							name="username"
+							value={state.username}
+							onChange={onChange}
+						/>
+						<FormTextInput
+							labelName="Password"
+							name="password"
+							value={state.password}
+							onChange={onChange}
+              type="password"
+						/>
+						<FormTextInput
+							labelName="Confirm Password"
+							name="confirmPassword"
+							value={state.confirmPassword}
+							onChange={onChange}
+              type="password"
+						/>
 						<input type="submit" value="Submit" className="submit" />
 					</form>
 				</div>
