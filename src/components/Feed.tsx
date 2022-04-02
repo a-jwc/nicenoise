@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useGetOrderedSounds, useGetSoundInfo } from "../hooks/useGetFeed";
 
 export default function Feed({ url }: { url: string }) {

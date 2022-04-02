@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { User } from "../interfaces/interface";
 
 export default function useFetch<T>(url: string) {
 	const [isLoading, setIsLoading] = useState(false);
@@ -26,7 +25,7 @@ export default function useFetch<T>(url: string) {
 				throw err;
 			} finally {
 				setIsLoading(false);
-      }
+			}
 		};
 		fetchData();
 	}, [url]);
