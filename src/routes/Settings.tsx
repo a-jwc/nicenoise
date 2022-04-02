@@ -38,8 +38,8 @@ const Settings = () => {
 		};
 		await sendRequest(
 			"http://localhost:8000/api/v1/user/update-user",
-			payload, 
-      "PUT"
+			"PUT",
+			payload
 		);
 	};
 

@@ -1,7 +1,7 @@
 export const sendRequest = async (
 	url: string,
-	payload: any,
-	method: string
+	method: string,
+	payload?: any,
 ) => {
 	try {
 		const res = await fetch(url, {

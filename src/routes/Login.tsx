@@ -32,8 +32,8 @@ export const Login = () => {
 
 		const res = await sendRequest(
 			"http://localhost:8000/api/v1/auth/login",
-			credentials,
-			"POST"
+			"POST",
+			credentials
 		);
 		if (!res.ok) {
 			setError("Invalid login.");
