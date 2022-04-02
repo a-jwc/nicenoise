@@ -1,10 +1,11 @@
-import { useEffect } from "react";
-import { AiOutlineSetting } from "react-icons/ai";
-import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useOutletContext } from "react-router-dom";
 import useFetch from "../hooks/useFetch";
-import useLogout from "../hooks/useLogout";
 import Dropdown from "./Dropdown";
 import UploadSound from "./UploadSound";
+import { IsLoggedIn } from "../interfaces/interface";
+import { logout } from "../utils/fetch";
+import { ContextType } from "../App";
 
 export default function Navbar({
 	isLoggedIn,
@@ -13,14 +14,18 @@ export default function Navbar({
 	isLoggedIn: boolean;
 	setIsLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
-	const { apiData } = useFetch<boolean>(
+	const context: ContextType = useOutletContext();
+	const { apiData } = useFetch<IsLoggedIn>(
 		"http://localhost:8000/api/v1/user/is-logged-in"
 	);
-	const { logout } = useLogout();
+	const [username, setUsername] = useState("");
 
 	useEffect(() => {
-		if (apiData) setIsLoggedIn(apiData);
-	}, [apiData, isLoggedIn, setIsLoggedIn]);
+		if (apiData) {
+			setIsLoggedIn(apiData.status);
+			setUsername(apiData.username);
+		}
+	}, [apiData, username, context, setIsLoggedIn]);
 
 	return (
 		<nav className="flex px-8 py-4 text-white object-contain border-b-neutral-100 bg-black bg-opacity-5 drop-shadow-2xl">
@@ -36,13 +41,13 @@ export default function Navbar({
 				{isLoggedIn ? (
 					[
 						<li key={"Profile"}>
-							<Link to="/profile">profile</Link>
+							<Link to={`/${username}`}>profile</Link>
 						</li>,
 						<li key={"Logout"}>
 							<Link
 								to="/"
 								onClick={async () => {
-									logout();
+									await logout();
 									setIsLoggedIn(false);
 								}}
 							>

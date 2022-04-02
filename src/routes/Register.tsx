@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useIsLoggedIn } from "../App";
 import Container from "../components/Container";
 import FormTextInput from "../components/FormTextInput";
@@ -16,8 +16,6 @@ export const Register = () => {
 	const { setIsLoggedIn } = useIsLoggedIn();
 
 	let navigate = useNavigate();
-	let location = useLocation();
-	let from = location.pathname;
 
 	const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setState({ ...state, [e.target.name]: e.target.value });
@@ -49,6 +47,7 @@ export const Register = () => {
 		} else {
       setIsLoggedIn(true);
       navigate("/", { replace: true });
+			window.location.reload();
     }
 	};
 

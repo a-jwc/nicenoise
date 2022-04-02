@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import Container from "../components/Container";
 import Feed from "../components/Feed";
 import Playback from "../components/Playback";
@@ -9,8 +10,9 @@ import { User } from "../interfaces/interface";
 const order = "desc";
 
 export default function Profile() {
+	const params = useParams();
 	const { isLoading, apiData, error } = useFetch<User>(
-		"http://localhost:8000/api/v1/user/profile"
+		`http://localhost:8000/api/v1/user/${params.username}`
 	);
 
 	const [userInfo, setUserInfo] = useState<User>({
@@ -24,7 +26,7 @@ export default function Profile() {
 	const [avatar, setAvatar] = useState<Blob>();
 
 	useEffect(() => {
-		if (apiData !== undefined) {
+		if (apiData) {
 			setUserInfo({
 				...userInfo,
 				username: apiData.username,
@@ -36,22 +38,22 @@ export default function Profile() {
 			});
 		}
 
-    if (userInfo.avatar) {
-      fetch("http://localhost:8000/api/v1/user/get-avatar", {
-        mode: "cors",
-        credentials: "include",
-      })
-        .then((res) => {
-          if (!res.ok) throw Error("Response not ok");
-          return res.blob();
-        })
-        .then((blob) => {
-          if (blob !== undefined) setAvatar(blob);
-        })
-        .catch((err) => {
-          throw err;
-        });
-    }
+		if (userInfo.avatar) {
+			fetch(`http://localhost:8000/api/v1/user/get-avatar/${params.username}`, {
+				mode: "cors",
+				credentials: "include",
+			})
+				.then((res) => {
+					if (!res.ok) throw Error("Response not ok");
+					return res.blob();
+				})
+				.then((blob) => {
+					if (blob) setAvatar(blob);
+				})
+				.catch((err) => {
+					throw err;
+				});
+		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [
 		apiData,
@@ -66,7 +68,6 @@ export default function Profile() {
 	return (
 		<Container>
 			<div className="lg:grid lg:auto-cols-min lg:grid-flow-col flex flex-col gap-6 place-items-center items-center lg:max-w-fit">
-				{isLoading && <span className="text-white">Loading...</span>}
 				{!isLoading && error ? (
 					<span className="text-white">
 						You have been logged out. Please login again.

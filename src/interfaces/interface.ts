@@ -142,3 +142,8 @@ export interface User {
 	likes: Sound[];
   sounds: Sound[]
 }
+
+export interface IsLoggedIn {
+  status: boolean;
+  username: string;
+}

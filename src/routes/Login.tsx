@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Container from "../components/Container";
 import { useIsLoggedIn } from "../App";
 import FormTextInput from "../components/FormTextInput";
@@ -14,8 +14,6 @@ export const Login = () => {
 	const [error, setError] = useState("");
 
 	let navigate = useNavigate();
-	let location = useLocation();
-	let from = location.pathname;
 
 	const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setState({ ...state, [e.target.name]: e.target.value });
@@ -37,11 +35,13 @@ export const Login = () => {
 		);
 		if (!res.ok) {
 			setError("Invalid login.");
-      return;
+			return;
 		} else {
-      setIsLoggedIn(true);
-      navigate("/", { replace: true });
-    }
+			// const user = await res.json();
+			setIsLoggedIn(true);
+			navigate("/", { replace: true });
+			window.location.reload();
+		}
 	};
 
 	return (

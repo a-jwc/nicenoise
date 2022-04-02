@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-
+import { useOutletContext } from "react-router-dom";
+import { ContextType } from "../App";
 import Container from "../components/Container";
 import FormTextInput from "../components/FormTextInput";
 import useFetch from "../hooks/useFetch";
@@ -7,8 +8,9 @@ import { User } from "../interfaces/interface";
 import { sendRequest } from "../utils/fetch";
 
 const Settings = () => {
+  const context: ContextType = useOutletContext();
 	const { apiData } = useFetch<User>(
-		"http://localhost:8000/api/v1/user/profile"
+		`http://localhost:8000/api/v1/user/${context.username}`
 	);
 	const [state, setState] = useState({
 		username: "",
@@ -53,7 +55,8 @@ const Settings = () => {
 				currEmail: apiData.email,
 			});
 		}
-	}, [apiData]);
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [apiData, context.username]);
 
 	return (
 		<Container>

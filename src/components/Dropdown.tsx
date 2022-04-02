@@ -6,7 +6,6 @@ import { CgProfile } from "react-icons/cg";
 import { AiOutlineSetting, AiOutlineLogout } from "react-icons/ai";
 import { FcMusic } from "react-icons/fc";
 import UploadSound from "./UploadSound";
-import useLogout from "../hooks/useLogout";
 
 export default function Dropdown({
 	isLoggedIn,
@@ -15,7 +14,6 @@ export default function Dropdown({
 	isLoggedIn: boolean;
 	setIsLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
-	const { logout } = useLogout();
 
 	return (
 		<Menu as="div" className="relative inline-block text-left">
@@ -72,7 +70,6 @@ export default function Dropdown({
 									<Link
 										to="/"
 										onClick={async () => {
-											logout();
 											setIsLoggedIn(false);
 										}}
                     style={{ display: "flex" }}
