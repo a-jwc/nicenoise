@@ -1,4 +1,4 @@
-import {  useState } from "react";
+import {  useEffect, useState } from "react";
 import { useOutletContext } from "react-router-dom";
 import { ContextType } from "../../App";
 import UploadModal from "../UploadModal";
@@ -6,6 +6,11 @@ import UploadModal from "../UploadModal";
 const Avatar = ({ image }: { image: Blob | undefined }) => {
 	const [imageHover, setImageHover] = useState(false);
 	const context: ContextType = useOutletContext();
+  const [avatar, setAvatar] = useState("");
+
+  useEffect(() => {
+    if (image) setAvatar(URL.createObjectURL(image))
+  }, [image])
   
 	return (
 		<div
@@ -14,7 +19,7 @@ const Avatar = ({ image }: { image: Blob | undefined }) => {
 		>
 			{image ? (
 				<div className="avatar mask rounded-full flex flex-col place-content-end text-center pb-4">
-					<img src={URL.createObjectURL(image)} alt="profile"></img>
+					<img src={avatar} alt="profile"></img>
 					{imageHover ? (
 						<UploadModal
 							{...Avatar.defaultProps}
