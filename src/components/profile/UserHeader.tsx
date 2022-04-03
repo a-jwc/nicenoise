@@ -15,8 +15,7 @@ const UserHeader = ({
 	const [avatar, setAvatar] = useState<Blob>();
 	const params = useParams();
 
-  useEffect(() => {
-    
+	useEffect(() => {
 		if (userInfo.avatar) {
 			fetch(`http://localhost:8000/api/v1/user/get-avatar/${params.username}`, {
 				mode: "cors",
@@ -33,7 +32,7 @@ const UserHeader = ({
 					throw err;
 				});
 		}
-  })
+	}, [userInfo.avatar]);
 
 	return (
 		<>
