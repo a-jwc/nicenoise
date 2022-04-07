@@ -42,11 +42,7 @@ const UserHeader = ({
 				</span>
 			) : (
 				<div className="bg-white bg-opacity-10 max-w-fit p-8 m-8 w-[33vw] min-w-fit justify-self-center lg:self-start lg:mt-10 drop-shadow-2xl">
-					<div>
-						<div>
-							<Avatar image={avatar} />
-						</div>
-					</div>
+					<Avatar image={avatar} />
 					<div className="flex flex-col gap-2 mt-4 text-white">
 						<span className="">{userInfo.username}</span>
 					</div>

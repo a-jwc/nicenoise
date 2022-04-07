@@ -37,7 +37,6 @@ export const Login = () => {
 			setError("Invalid login.");
 			return;
 		} else {
-			// const user = await res.json();
 			setIsLoggedIn(true);
 			navigate("/", { replace: true });
 			window.location.reload();
