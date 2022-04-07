@@ -14,8 +14,8 @@ const Avatar = ({ image }: { image: Blob | undefined }) => {
   
 	return (
 		<div
-			onMouseEnter={() => setImageHover(() => !imageHover)}
-			onMouseLeave={() => setImageHover(() => !imageHover)}
+			onMouseEnter={() => setImageHover(() => true)}
+			onMouseLeave={() => setImageHover(() => false)}
 		>
 			{image ? (
 				<div className="avatar mask rounded-full flex flex-col place-content-end text-center pb-4">

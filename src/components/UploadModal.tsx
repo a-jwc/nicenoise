@@ -2,6 +2,8 @@ import { useState } from "react";
 import { returnFileSize, validFileType } from "../utils/fileUpload";
 import ReactModal from "react-modal";
 import { useNavigate } from "react-router-dom";
+import { Button } from "@mui/material";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 interface UploadModalProp {
 	url: string;
@@ -9,8 +11,8 @@ interface UploadModalProp {
 	modalTitle: string;
 	modalButtonStyles: string;
 	fileAccept: string;
-  navigateUrl: string;
-  modalButtonName: string;
+	navigateUrl: string;
+	modalButtonName: string;
 }
 
 export default function UploadModal({
@@ -19,8 +21,8 @@ export default function UploadModal({
 	modalTitle,
 	modalButtonStyles,
 	fileAccept,
-  navigateUrl,
-  modalButtonName
+	navigateUrl,
+	modalButtonName,
 }: UploadModalProp) {
 	const [file, setFile] = useState<File>();
 	const [fileSize, setFileSize] = useState<string | undefined>("");
@@ -31,7 +33,7 @@ export default function UploadModal({
 	const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
 		if (event.target.files !== null) {
 			const file = event.target.files[0];
-      console.log(file.type)
+			console.log(file.type);
 			if (validFileType(file, fileTypes)) {
 				setFile(file);
 				setFileSize(returnFileSize(file.size));
@@ -60,8 +62,26 @@ export default function UploadModal({
 			if (!res.ok) throw Error("Could not get upload");
 			const data = await res.json();
 			navigate(navigateUrl, { replace: true });
-		} catch (err) {
-			throw Error("Error uploading");
+		} catch (e) {
+			throw e;
+		}
+	};
+
+	const handleDelete = async () => {
+		try {
+			const res = await fetch(
+				"http://localhost:8000/api/v1/user/delete-avatar",
+				{ method: "POST", mode: "cors", credentials: "include" }
+			);
+			if (res.status === 401) {
+				setError("Please login or register to delete");
+				throw Error("Unauthorized");
+			}
+			if (!res.ok) throw Error("Could not delete");
+			const data = await res.json();
+			navigate(navigateUrl, { replace: true });
+		} catch (e) {
+			throw e;
 		}
 	};
 
@@ -90,39 +110,49 @@ export default function UploadModal({
 					},
 				}}
 			>
-				<div className="">
+				<>
 					<h1>{modalTitle}</h1>
-					<button onClick={closeModal} className="absolute top-2 right-4">
-						X
-					</button>
-					<form className="flex flex-col" onSubmit={handleSubmit}>
-						<label className="flex flex-col place-self-center border-2 text-center w-20 h-10 hover:cursor-pointer">
-							Upload
+					<div className="flex flex-col place-items-center">
+						<button onClick={closeModal} className="absolute top-2 right-4">
+							X
+						</button>
+						<form className="flex flex-col" onSubmit={handleSubmit}>
+							<label className="flex flex-col place-self-center border-2 text-center w-20 h-10 hover:cursor-pointer">
+								Upload
+								<input
+									type="file"
+									accept={fileAccept}
+									className="mt-2 opacity-0 hover:cursor-pointer"
+									onChange={(e) => handleFileUpload(e)}
+									required
+								/>
+							</label>
 							<input
-								type="file"
-								accept={fileAccept}
-								className="mt-2 opacity-0 hover:cursor-pointer"
-								onChange={(e) => handleFileUpload(e)}
-								required
+								type="submit"
+								className="place-self-center w-16 h-8 bg-pink-300 m-4 text-white hover:cursor-pointer"
 							/>
-						</label>
-						<input
-							type="submit"
-							className="place-self-center w-16 h-8 bg-pink-300 m-4 text-white hover:cursor-pointer"
-						/>
-						<div className="flex flex-row gap-4 mx-auto">
-							<div>
-								{file?.name.length !== undefined
-									? `File name: ${file?.name}`
-									: ""}
+							<div className="flex flex-row gap-4 mx-auto">
+								<div>
+									{file?.name.length !== undefined
+										? `File name: ${file?.name}`
+										: ""}
+								</div>
+								<div>{fileSize !== "" ? `File size: ${fileSize}` : ""}</div>
 							</div>
-							<div>{fileSize !== "" ? `File size: ${fileSize}` : ""}</div>
+						</form>
+						<Button
+							onClick={handleDelete}
+							size="small"
+							startIcon={<DeleteIcon />}
+							color="error"
+						>
+							Delete image
+						</Button>
+						<div className="text-center text-red-500">
+							{error.length !== 0 ? error : ""}
 						</div>
-					</form>
-					<div className="text-center text-red-500">
-						{error.length !== 0 ? error : ""}
 					</div>
-				</div>
+				</>
 			</ReactModal>
 		</>
 	);
