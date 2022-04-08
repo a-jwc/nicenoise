@@ -4,6 +4,7 @@ import Player from "../components/effector/TonePlayer";
 import { validFileType, returnFileSize } from "../utils/fileUpload";
 import { createTone } from "../utils/tone";
 import * as Tone from "tone";
+import SubmitInput from "../components/util/SubmitInput";
 
 export const Effector = () => {
 	const [file, setFile] = useState<File>();
@@ -54,10 +55,7 @@ export const Effector = () => {
 								required
 							/>
 						</label>
-						<input
-							type="submit"
-							className="place-self-center w-16 h-8 bg-pink-300 m-4 text-white hover:cursor-pointer"
-						/>
+            <SubmitInput bgColor="bg-red-300" textColor="text-white" styles="place-self-center mb-2" />
 						<div className="flex flex-row gap-4 mx-auto text-white">
 							<div>
 								{file?.name.length !== undefined
