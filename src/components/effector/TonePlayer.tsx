@@ -34,6 +34,7 @@ import {
 	FilterRollOffs,
 } from "../../utils/options";
 import EffectSelectInput from "./EffectSelectInput";
+import Header1 from "./elements/Header1";
 
 export default function TonePlayer({ player }: PlayerContainer) {
 	const [effects, setEffects] = useState({
@@ -86,8 +87,8 @@ export default function TonePlayer({ player }: PlayerContainer) {
 	}, [player, recorder]);
 
 	return (
-		<div className="flex flex-col border-4 p-4 m-4 text-white object-contain">
-			<h1 className="text-center">Player</h1>
+		<div className="flex flex-col border-4 lg:p-4 p-2 m-4 text-white object-contain">
+			<Header1 name="Player" />
 			<div className="lg:grid lg:grid-cols-3 flex flex-col gap-4 2xs:p-4 items-center lg:place-items-center">
 				<VolumeSlider
 					player={player}
@@ -119,7 +120,7 @@ export default function TonePlayer({ player }: PlayerContainer) {
 					step="1"
 				/> */}
 				<div className="row-start-2 col-start-2">
-					<h2 className="text-center mt-2 mb-4">Effects</h2>
+					<Header1 name="Effects" styles="mb-4 mt-2" />
 					<div className="flex xl:flex-nowrap flex-wrap place-content-center items-center gap-8 lg:w-fit w-[33vw] pb-4">
 						<div className="effect w-96">
 							<h1>Distortion</h1>
