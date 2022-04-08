@@ -8,24 +8,23 @@ export function VolumeSlider({
 	max,
 	defaultValue,
 	step,
-  styles
+	styles,
 }: SliderProp) {
 	return (
-		<div className=" text-white m-8">
-			<label>
-				{name}
-				<input
-					type="range"
-					min={min}
-					max={max}
-					defaultValue={defaultValue}
-					step={step}
-					onChange={(e) => {
-						fn(player, parseFloat(e.target.value));
-					}}
-          className="lg:-rotate-90"
-				/>
-			</label>
+		<div className="flex lg:flex-row flex-col text-white m-8">
+			<label htmlFor={name}>{name}</label>
+			<input
+				name={name}
+				type="range"
+				min={min}
+				max={max}
+				defaultValue={defaultValue}
+				step={step}
+				onChange={(e) => {
+					fn(player, parseFloat(e.target.value));
+				}}
+				className="lg:-rotate-90"
+			/>
 		</div>
 	);
 }
