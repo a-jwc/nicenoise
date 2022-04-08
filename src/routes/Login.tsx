@@ -4,6 +4,7 @@ import Container from "../components/Container";
 import { useIsLoggedIn } from "../App";
 import FormTextInput from "../components/FormTextInput";
 import { sendRequest } from "../utils/fetch";
+import SubmitInput from "../components/util/SubmitInput";
 
 export const Login = () => {
 	const [state, setState] = useState({
@@ -65,7 +66,7 @@ export const Login = () => {
 							onChange={onChange}
 							type="password"
 						/>
-						<input type="submit" value="Submit" className="submit text-white" />
+						<SubmitInput bgColor="bg-red-300" textColor="text-white" />
 					</form>
 				</div>
 				<NotRegistered />

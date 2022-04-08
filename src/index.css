@@ -3,9 +3,6 @@
 @tailwind utilities;
 
 @layer components {
-	.submit {
-		@apply rounded-full bg-red-300 text-white mx-auto px-4 py-2 mt-4 hover:cursor-pointer;
-	}
 
 	.form-field {
 		@apply my-2 self-center flex flex-col text-white;
@@ -52,18 +49,6 @@
 	.feed {
 		@apply flex flex-col gap-4 object-contain bg-opacity-10 p-4 m-4 min-w-fit;
 	}
-
-  /* .playback {
-    @apply -z-[1]
-  } */
-
-  .red-button {
-    @apply bg-red-400 rounded-sm text-white mx-auto px-4 py-2 m-4 hover:cursor-pointer;
-  }
-
-  .cancel-button {
-    @apply bg-neutral-400 rounded-sm text-white mx-auto px-4 py-2 m-4 hover:cursor-pointer;
-  }
 }
 
 html {

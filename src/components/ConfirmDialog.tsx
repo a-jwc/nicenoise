@@ -1,5 +1,6 @@
 import { Dialog } from "@headlessui/react";
 import { useState } from "react";
+import Button from "./util/Button";
 
 const ConfirmDialog = ({ handle }: { handle: () => Promise<void> }) => {
 	const [isOpen, setIsOpen] = useState(true);
@@ -19,18 +20,20 @@ const ConfirmDialog = ({ handle }: { handle: () => Promise<void> }) => {
 					</Dialog.Description>
 					<p>Are you sure?</p>
 
-					<button
+					<Button
+						name="Delete"
 						onClick={() => {
 							handle();
 							setIsOpen(false);
 						}}
-						className="red-button mr-4"
-					>
-						Delete
-					</button>
-					<button onClick={() => setIsOpen(false)} className="cancel-button">
-						Cancel
-					</button>
+						color="bg-red-500"
+						styles="mr-4"
+					/>
+					<Button
+						name="Cancel"
+						onClick={() => setIsOpen(false)}
+						color="bg-neutral-400"
+					/>
 				</div>
 			</div>
 		</Dialog>

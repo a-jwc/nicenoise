@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useIsLoggedIn } from "../App";
 import Container from "../components/Container";
 import FormTextInput from "../components/FormTextInput";
+import SubmitInput from "../components/util/SubmitInput";
 import { sendRequest } from "../utils/fetch";
 
 export const Register = () => {
@@ -43,12 +44,12 @@ export const Register = () => {
 		);
 		if (!res.ok) {
 			setError("Invalid login.");
-      return;
+			return;
 		} else {
-      setIsLoggedIn(true);
-      navigate("/", { replace: true });
+			setIsLoggedIn(true);
+			navigate("/", { replace: true });
 			window.location.reload();
-    }
+		}
 	};
 
 	return (
@@ -79,16 +80,16 @@ export const Register = () => {
 							name="password"
 							value={state.password}
 							onChange={onChange}
-              type="password"
+							type="password"
 						/>
 						<FormTextInput
 							labelName="Confirm Password"
 							name="confirmPassword"
 							value={state.confirmPassword}
 							onChange={onChange}
-              type="password"
+							type="password"
 						/>
-						<input type="submit" value="Submit" className="submit" />
+						<SubmitInput bgColor="bg-red-300" textColor="text-white" />
 					</form>
 				</div>
 				<Registered />
