@@ -56,6 +56,14 @@
   /* .playback {
     @apply -z-[1]
   } */
+
+  .red-button {
+    @apply bg-red-400 rounded-sm text-white mx-auto px-4 py-2 m-4 hover:cursor-pointer;
+  }
+
+  .cancel-button {
+    @apply bg-neutral-400 rounded-sm text-white mx-auto px-4 py-2 m-4 hover:cursor-pointer;
+  }
 }
 
 html {

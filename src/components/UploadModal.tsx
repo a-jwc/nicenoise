@@ -2,8 +2,7 @@ import { useState } from "react";
 import { returnFileSize, validFileType } from "../utils/fileUpload";
 import ReactModal from "react-modal";
 import { useNavigate } from "react-router-dom";
-import { Button } from "@mui/material";
-import DeleteIcon from "@mui/icons-material/Delete";
+import ConfirmDialog from "./ConfirmDialog";
 
 interface UploadModalProp {
 	url: string;
@@ -28,6 +27,7 @@ export default function UploadModal({
 	const [fileSize, setFileSize] = useState<string | undefined>("");
 	const [modalIsOpen, setModalIsOpen] = useState(false);
 	const [error, setError] = useState("");
+	const [dialog, setDialog] = useState(<></>);
 	let navigate = useNavigate();
 
 	const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -61,6 +61,7 @@ export default function UploadModal({
 			}
 			if (!res.ok) throw Error("Could not get upload");
 			const data = await res.json();
+			window.location.reload();
 			navigate(navigateUrl, { replace: true });
 		} catch (e) {
 			throw e;
@@ -79,10 +80,14 @@ export default function UploadModal({
 			}
 			if (!res.ok) throw Error("Could not delete");
 			const data = await res.json();
-			navigate(navigateUrl, { replace: true });
+			window.location.reload();
 		} catch (e) {
 			throw e;
 		}
+	};
+
+	const openDialog = () => {
+		setDialog(<ConfirmDialog handle={handleDelete} />);
 	};
 
 	const openModal = () => {
@@ -140,14 +145,10 @@ export default function UploadModal({
 								<div>{fileSize !== "" ? `File size: ${fileSize}` : ""}</div>
 							</div>
 						</form>
-						<Button
-							onClick={handleDelete}
-							size="small"
-							startIcon={<DeleteIcon />}
-							color="error"
-						>
-							Delete image
-						</Button>
+						<button onClick={openDialog} className="text-red-500">
+							Delete profile image
+						</button>
+						{dialog}
 						<div className="text-center text-red-500">
 							{error.length !== 0 ? error : ""}
 						</div>
