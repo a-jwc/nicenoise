@@ -4,7 +4,7 @@ import Player from "../components/effector/TonePlayer";
 import { validFileType, returnFileSize } from "../utils/fileUpload";
 import { createTone } from "../utils/tone";
 import * as Tone from "tone";
-import SubmitInput from "../components/util/SubmitInput";
+import SubmitInput from "../components/elements/SubmitInput";
 
 export const Effector = () => {
 	const [file, setFile] = useState<File>();
