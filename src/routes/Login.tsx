@@ -4,7 +4,7 @@ import Container from "../components/Container";
 import { useIsLoggedIn } from "../App";
 import FormTextInput from "../components/FormTextInput";
 import { sendRequest } from "../utils/fetch";
-import SubmitInput from "../components/util/SubmitInput";
+import SubmitInput from "../components/elements/SubmitInput";
 
 export const Login = () => {
 	const [state, setState] = useState({

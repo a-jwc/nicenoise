@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useIsLoggedIn } from "../App";
 import Container from "../components/Container";
 import FormTextInput from "../components/FormTextInput";
-import SubmitInput from "../components/util/SubmitInput";
+import SubmitInput from "../components/elements/SubmitInput";
 import { sendRequest } from "../utils/fetch";
 
 export const Register = () => {

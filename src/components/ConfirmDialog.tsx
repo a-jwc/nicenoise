@@ -1,6 +1,6 @@
 import { Dialog } from "@headlessui/react";
 import { useState } from "react";
-import Button from "./util/Button";
+import Button from "./elements/Button";
 
 const ConfirmDialog = ({ handle }: { handle: () => Promise<void> }) => {
 	const [isOpen, setIsOpen] = useState(true);

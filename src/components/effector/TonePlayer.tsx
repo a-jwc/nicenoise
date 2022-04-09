@@ -34,7 +34,8 @@ import {
 	FilterRollOffs,
 } from "../../utils/options";
 import EffectSelectInput from "./EffectSelectInput";
-import Header1 from "./elements/Header1";
+import Header1 from "../elements/Header1";
+import Recorder from "./Recorder";
 
 export default function TonePlayer({ player }: PlayerContainer) {
 	const [effects, setEffects] = useState({
@@ -46,10 +47,6 @@ export default function TonePlayer({ player }: PlayerContainer) {
 	});
 	const [isLoop, setIsLoop] = useState(true);
 	const [recorder, setRecorder] = useState<Tone.Recorder>(new Tone.Recorder());
-	const [isRecorded, setIsRecorded] = useState(false);
-	const [isRecording, setIsRecording] = useState(false);
-	const [recordingUrl, setRecordingUrl] = useState("");
-	const [recording, setRecording] = useState("Record");
 
 	useEffect(() => {
 		const {
@@ -274,47 +271,7 @@ export default function TonePlayer({ player }: PlayerContainer) {
 					</div>
 				</div>
 			</div>
-			<div>
-				<label
-					className={`flex flex-col place-self-center border-2 border-neutral-400 p-4 w-24 h-12 mx-auto text-center hover:cursor-pointer mb-12 hover:bg-red-300 transition-colors ${
-						isRecording ? "bg-red-300" : "bg-blue-300"
-					}`}
-				>
-					{recording}
-					<input
-						type={"submit"}
-						value={recording}
-						onClick={async (e) => {
-							e.preventDefault();
-							console.log(recorder.state);
-							if (recorder.state === "stopped") {
-								recorder.start();
-								setRecording("Recording");
-								setIsRecording(true);
-							} else {
-								const recording = await recorder.stop();
-								const url = URL.createObjectURL(recording);
-								setRecording("Record");
-								setIsRecording(false);
-								setIsRecorded(true);
-								setRecordingUrl(url);
-							}
-						}}
-						className="mt-2 opacity-0 hover:cursor-pointer"
-					/>
-				</label>
-				<div className="text-center">
-					{isRecorded && (
-						<a
-							href={`${recordingUrl}`}
-							download="recording.webm"
-							className="text-red-500"
-						>
-							Download
-						</a>
-					)}
-				</div>
-			</div>
+			<Recorder recorder={recorder} />
 		</div>
 	);
 }
