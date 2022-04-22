@@ -23,9 +23,12 @@ export default function Profile() {
 		id: 0,
 		likes: [],
 		sounds: [],
+		followedBy: [],
+		following: [],
 	});
 
 	useEffect(() => {
+		console.log(userInfo);
 		if (apiData) {
 			setUserInfo({
 				...userInfo,
@@ -35,6 +38,8 @@ export default function Profile() {
 				id: apiData.id,
 				likes: apiData.likes,
 				sounds: apiData.sounds,
+				followedBy: apiData.followedBy,
+				following: apiData.following,
 			});
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -46,12 +51,14 @@ export default function Profile() {
 		userInfo.username,
 		userInfo.likes,
 		userInfo.sounds,
+		userInfo.followedBy,
+		userInfo.following,
 	]);
 
 	return (
 		<Container>
 			<div className="lg:grid lg:auto-cols-min lg:grid-flow-col flex flex-col gap-6 place-items-center items-center lg:max-w-fit">
-        <UserHeader userInfo={userInfo} isLoading={isLoading} error={error} />
+				<UserHeader userInfo={userInfo} isLoading={isLoading} error={error} />
 				<div className="text-white">
 					<UserSounds userInfo={userInfo} />
 					<UserLikes userInfo={userInfo} />

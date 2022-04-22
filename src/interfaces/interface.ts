@@ -140,10 +140,12 @@ export interface User {
 	email: string;
 	avatar: any;
 	likes: Sound[];
-  sounds: Sound[]
+	sounds: Sound[];
+	followedBy: User[];
+	following: User[];
 }
 
 export interface IsLoggedIn {
-  status: boolean;
-  username: string;
+	status: boolean;
+	username: string;
 }
