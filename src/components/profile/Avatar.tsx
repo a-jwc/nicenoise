@@ -1,21 +1,34 @@
-import {  useEffect, useState } from "react";
-import { useOutletContext } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useLocation, useOutletContext } from "react-router-dom";
 import { ContextType } from "../../App";
 import UploadModal from "../UploadModal";
 
 const Avatar = ({ image }: { image: Blob | undefined }) => {
 	const [imageHover, setImageHover] = useState(false);
 	const context: ContextType = useOutletContext();
-  const [avatar, setAvatar] = useState("");
+	const [avatar, setAvatar] = useState("");
+	const location = useLocation();
+	const [profileName, setProfileName] = useState("");
 
-  useEffect(() => {
-    if (image) setAvatar(URL.createObjectURL(image))
-  }, [image])
-  
+	useEffect(() => {
+		// Get the pathname without the prefix /
+		const profilePath = location.pathname.split("/")[1];
+		setProfileName(profilePath);
+		if (image) setAvatar(URL.createObjectURL(image));
+	}, [image]);
+
 	return (
 		<div
-			onMouseEnter={() => setImageHover(() => true)}
-			onMouseLeave={() => setImageHover(() => false)}
+			onMouseEnter={() => {
+				if (profileName === context.username) {
+					setImageHover(() => true);
+				}
+			}}
+			onMouseLeave={() => {
+				if (profileName === context.username) {
+					setImageHover(() => false);
+				}
+			}}
 		>
 			{image ? (
 				<div className="avatar mask rounded-full flex flex-col place-content-end text-center pb-4">
