@@ -66,7 +66,7 @@ export default function Navbar({
 					</li>
 				)}
 				<li key={"Upload"}>
-					<UploadSound />
+					{isLoggedIn ? <UploadSound /> : <></>}
 				</li>
 			</ul>
 			{/* <ul className="navbar flex justify-end flex-wrap flex-shrink xs:gap-6 gap-2 place-content-end object-contain font-bold w-1/2 ">
